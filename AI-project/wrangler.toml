@@ -1,4 +1,4 @@
-name = "your-app-name"
+name = "banana"
 main = ".open-next/worker.js"
 compatibility_date = "2025-03-01"
 compatibility_flags = ["nodejs_compat"]
@@ -10,7 +10,6 @@ directory = ".open-next/assets"
 # # [[hyperdrive]]
 # # binding = "HYPERDRIVE"
 # # id = ""
-localConnectionString = ""
 
 [observability]
 enabled = true
@@ -27,15 +26,10 @@ NEXT_PUBLIC_THEME = "default"
 NEXT_PUBLIC_APPEARANCE = "system"
 
 # database
-DATABASE_URL = ""
 DATABASE_PROVIDER = "postgresql"
 DB_SINGLETON_ENABLED = "true"
 DB_MAX_CONNECTIONS = "1"
 
 # auth secret
 # openssl rand -base64 32
-AUTH_SECRET = ""
-
-
-# Static Assets
-assets = { directory = ".open-next/assets", binding = "ASSETS" }
+# AUTH_SECRET is a secret. Set it via `wrangler secret put AUTH_SECRET`.

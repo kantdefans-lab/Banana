@@ -53,13 +53,6 @@ export type AdminOverviewData = {
     payments: RecentPayment[];
     aiTasks: RecentAITask[];
   };
-  diagnostics?: {
-    dbConfigured: boolean;
-    dbHost?: string;
-    dbName?: string;
-    timeoutMs: number;
-    errors: string[];
-  };
 };
 
 async function fetchAdminOverviewData({
@@ -91,14 +84,8 @@ async function fetchAdminOverviewData({
   };
 
   if (!envConfigs.database_url) {
-    return {
-      ...empty,
-      diagnostics: {
-        dbConfigured: false,
-        timeoutMs: process.env.NODE_ENV !== 'production' ? 6000 : 8000,
-        errors: ['DATABASE_URL is not set'],
-      },
-    };
+    console.warn('[Admin Overview] DATABASE_URL is not set');
+    return empty;
   }
 
   const database = db();
@@ -118,7 +105,6 @@ async function fetchAdminOverviewData({
       return process.env.NODE_ENV !== 'production' ? 6000 : 8000;
     })();
 
-    const errors: string[] = [];
     async function safeQuery<T>(
       label: string,
       query: Promise<T>,
@@ -135,13 +121,11 @@ async function fetchAdminOverviewData({
         if (result === fallback) {
           const msg = `${label} timed out`;
           console.warn(`[Admin Overview] ${msg}`);
-          errors.push(msg);
         }
         return result;
       } catch (error) {
         const msg = `${label} failed`;
         console.error(`[Admin Overview] ${msg}:`, error);
-        errors.push(msg);
         return fallback;
       } finally {
         if (timer) clearTimeout(timer);
@@ -308,14 +292,6 @@ async function fetchAdminOverviewData({
       getValue: (item) => Number(item.amount) || 0,
     });
 
-    const safeUrl = (() => {
-      try {
-        return new URL(envConfigs.database_url);
-      } catch {
-        return null;
-      }
-    })();
-
     return {
       metrics: {
         totalUsers,
@@ -335,34 +311,10 @@ async function fetchAdminOverviewData({
         payments: recentPayments,
         aiTasks: recentAITasks,
       },
-      diagnostics: {
-        dbConfigured: true,
-        dbHost: safeUrl?.host,
-        dbName: safeUrl?.pathname?.replace('/', ''),
-        timeoutMs,
-        errors,
-      },
     };
   } catch (error) {
     console.error('[Admin Overview] Failed to load metrics:', error);
-    const safeUrl = (() => {
-      try {
-        return new URL(envConfigs.database_url);
-      } catch {
-        return null;
-      }
-    })();
-
-    return {
-      ...empty,
-      diagnostics: {
-        dbConfigured: true,
-        dbHost: safeUrl?.host,
-        dbName: safeUrl?.pathname?.replace('/', ''),
-        timeoutMs: process.env.NODE_ENV !== 'production' ? 6000 : 8000,
-        errors: ['overview_failed'],
-      },
-    };
+    return empty;
   }
 }
 
