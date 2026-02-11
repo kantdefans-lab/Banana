@@ -10,6 +10,7 @@ import {
   isFluxKontextModel 
 } from '@/shared/lib/ai-providers';
 import { buildParams, submitTask, moderateTextContent } from '@/shared/lib/wavespeed';
+import { getRuntimeEnv } from '@/shared/lib/env';
 
 export const maxDuration = 60; 
 
@@ -44,7 +45,7 @@ export async function POST(request: NextRequest) {
   try {
     const configs = await getAllConfigs();
     const wavespeedApiKey = String(
-      configs.wavespeed_api_key || process.env.WAVESPEED_API_KEY || ''
+      configs.wavespeed_api_key || getRuntimeEnv('WAVESPEED_API_KEY') || ''
     );
     const {
       prompt,

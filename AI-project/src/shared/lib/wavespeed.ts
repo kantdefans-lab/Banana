@@ -1,3 +1,5 @@
+import { getRuntimeEnv } from '@/shared/lib/env';
+
 type JsonValue =
   | null
   | boolean
@@ -82,7 +84,7 @@ export type WaveSpeedTask = {
 };
 
 const WAVESPEED_BASE_URL =
-  process.env.WAVESPEED_BASE_URL || 'https://api.wavespeed.ai/api/v3';
+  getRuntimeEnv('WAVESPEED_BASE_URL') || 'https://api.wavespeed.ai/api/v3';
 
 const MODELS_CACHE_TTL_MS = 60 * 60 * 1000;
 let cachedModels: { expiresAt: number; models: WaveSpeedModel[] } | null = null;

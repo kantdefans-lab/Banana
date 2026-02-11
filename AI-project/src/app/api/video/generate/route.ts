@@ -6,6 +6,7 @@ import { getUserInfo } from '@/shared/models/user';
 import { PROVIDER_CONFIGS } from '@/shared/lib/ai-providers';
 import { getAllConfigs } from '@/shared/models/config';
 import { buildParams, submitTask } from '@/shared/lib/wavespeed';
+import { getRuntimeEnv } from '@/shared/lib/env';
 
 export const maxDuration = 60; 
 
@@ -155,7 +156,7 @@ export async function POST(request: NextRequest) {
 
     if (provider === 'wavespeed') {
       const apiKey =
-        (configs.wavespeed_api_key || process.env.WAVESPEED_API_KEY || '').toString();
+        (configs.wavespeed_api_key || getRuntimeEnv('WAVESPEED_API_KEY') || '').toString();
       if (!apiKey) {
         throw new Error('WaveSpeed API key missing (wavespeed_api_key / WAVESPEED_API_KEY)');
       }

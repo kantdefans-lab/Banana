@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 import { getWaveSpeedRequestSchemaProperties, listModels } from '@/shared/lib/wavespeed';
 import { getAllConfigs } from '@/shared/models/config';
+import { getRuntimeEnv } from '@/shared/lib/env';
 
 export const dynamic = 'force-dynamic';
 
@@ -200,7 +201,7 @@ export async function GET(request: NextRequest) {
   try {
     const configs = await getAllConfigs();
     const apiKey = String(
-      configs.wavespeed_api_key || process.env.WAVESPEED_API_KEY || ''
+      configs.wavespeed_api_key || getRuntimeEnv('WAVESPEED_API_KEY') || ''
     );
 
     if (!apiKey) {

@@ -11,6 +11,7 @@ import {
 } from '@/shared/lib/ai-providers';
 import { extractMediaUrls, getTask, mapStatus } from '@/shared/lib/wavespeed';
 import { persistExternalMediaUrls } from '@/shared/lib/media-persistence';
+import { getRuntimeEnv } from '@/shared/lib/env';
 
 export const dynamic = 'force-dynamic';
 
@@ -96,7 +97,7 @@ export async function POST(request: NextRequest) {
     if (shouldQueryApi && provider === 'wavespeed' && externalTaskId) {
       const configs = await getAllConfigs();
       const apiKey =
-        (configs.wavespeed_api_key || process.env.WAVESPEED_API_KEY || '').toString();
+        (configs.wavespeed_api_key || getRuntimeEnv('WAVESPEED_API_KEY') || '').toString();
       if (!apiKey) {
         throw new Error('WaveSpeed API key missing (wavespeed_api_key / WAVESPEED_API_KEY)');
       }
