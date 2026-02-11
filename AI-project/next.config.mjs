@@ -14,7 +14,11 @@ const withNextIntl = createNextIntlPlugin(
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: process.env.VERCEL ? undefined : 'standalone',
+  // NOTE: Next.js standalone output triggers symlink creation during build traces.
+  // On many Windows setups this fails with EPERM (symlink not permitted).
+  // For local Windows builds (including `opennextjs-cloudflare build`), disable standalone.
+  output:
+    process.env.VERCEL || process.platform === 'win32' ? undefined : 'standalone',
   reactStrictMode: false,
   pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
   

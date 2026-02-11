@@ -180,7 +180,7 @@ async function fetchAdminOverviewData({
           .where(
             and(eq(order.status, OrderStatus.PAID), gte(order.createdAt, start))
           ),
-        [{ count: 0, total: 0 }]
+        [{ count: 0, total: '0' }]
       ),
       safeQuery(
         'active_subscriptions',
