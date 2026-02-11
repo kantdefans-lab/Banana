@@ -78,3 +78,35 @@ pnpm dev
 5. Deploy to vercel
 
 push code to github and deploy to Vercel.
+
+## Deploy to Cloudflare Workers (OpenNext)
+
+This project includes OpenNext scripts for Cloudflare Workers:
+
+```sh
+pnpm cf:deploy
+```
+
+### Cloudflare "one-click" (Git) build settings
+
+If your repo root contains `AI-project/` (this app is in a subfolder), set:
+
+- Build command:
+
+```sh
+pnpm -C AI-project install --frozen-lockfile && pnpm -C AI-project exec opennextjs-cloudflare build
+```
+
+- Deploy command:
+
+```sh
+pnpm -C AI-project exec opennextjs-cloudflare deploy
+```
+
+### Required environment variables / secrets
+
+At minimum you must set an auth secret. This code accepts either `AUTH_SECRET`
+or `BETTER_AUTH_SECRET` (both work).
+
+- `DATABASE_URL`
+- `AUTH_SECRET` (or `BETTER_AUTH_SECRET`)

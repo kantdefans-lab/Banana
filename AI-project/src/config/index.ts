@@ -30,6 +30,7 @@ export const envConfigs = {
   db_singleton_enabled: process.env.DB_SINGLETON_ENABLED || 'false',
   db_max_connections: process.env.DB_MAX_CONNECTIONS || '1',
   auth_url: process.env.AUTH_URL || process.env.NEXT_PUBLIC_APP_URL || '',
-  auth_secret: process.env.AUTH_SECRET ?? '', // openssl rand -base64 32
+  // better-auth error messages mention BETTER_AUTH_SECRET; accept both.
+  auth_secret: process.env.BETTER_AUTH_SECRET ?? process.env.AUTH_SECRET ?? '', // openssl rand -base64 32
   version: packageJson.version,
 };
