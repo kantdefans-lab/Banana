@@ -1,0 +1,1 @@
+export default function ParameterPanel(props: any) { return <div className='border p-4'>Parameter Panel</div>; }

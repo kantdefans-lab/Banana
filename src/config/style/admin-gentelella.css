@@ -1,0 +1,36 @@
+/* Admin-only theme overrides inspired by Gentelella (Emerald primary) */
+.admin-gentelella {
+  --background: 0 0% 97%;
+  --foreground: 222 47% 11%;
+  --card: 0 0% 100%;
+  --card-foreground: 222 47% 11%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 222 47% 11%;
+  --primary: 160 84% 39%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 210 40% 96%;
+  --secondary-foreground: 222 47% 11%;
+  --muted: 210 40% 96%;
+  --muted-foreground: 215 20% 45%;
+  --accent: 210 40% 94%;
+  --accent-foreground: 222 47% 11%;
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 214 32% 91%;
+  --input: 214 32% 91%;
+  --ring: 160 84% 39%;
+  --chart-1: 160 84% 39%;
+  --chart-2: 152 60% 45%;
+  --chart-3: 172 55% 40%;
+  --chart-4: 140 55% 45%;
+  --chart-5: 190 70% 40%;
+  --sidebar: 210 33% 25%;
+  --sidebar-foreground: 210 20% 96%;
+  --sidebar-primary: 160 84% 39%;
+  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-accent: 210 28% 30%;
+  --sidebar-accent-foreground: 210 20% 96%;
+  --sidebar-border: 210 33% 18%;
+  --sidebar-ring: 160 84% 39%;
+  --radius: 0.375rem;
+}

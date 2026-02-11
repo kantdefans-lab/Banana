@@ -1,0 +1,63 @@
+{
+  "list": {
+    "title": "用户管理",
+    "description": "管理系统用户、角色与积分。",
+    "crumbs": {
+      "admin": "管理后台",
+      "users": "用户列表"
+    },
+    "search": {
+      "email": {
+        "title": "邮箱搜索",
+        "placeholder": "请输入邮箱..."
+      }
+    },
+    "filters": {
+      "email_verified": {
+        "title": "邮箱验证",
+        "options": {
+          "all": "全部",
+          "verified": "已验证",
+          "unverified": "未验证"
+        }
+      }
+    },
+    "columns": {
+      "id": "ID",
+      "name": "姓名",
+      "avatar": "头像",
+      "email": "邮箱",
+      "roles": "角色",
+      "email_verified": "邮箱验证",
+      "credits": "剩余积分",
+      "created_at": "创建时间",
+      "actions": "操作"
+    },
+    "actions": {
+      "edit": "编辑用户",
+      "edit_roles": "修改角色"
+    }
+  },
+  "edit": {
+    "title": "编辑用户",
+    "crumbs": {
+      "admin": "管理后台",
+      "users": "用户列表",
+      "edit": "编辑用户"
+    },
+    "buttons": {
+      "submit": "更新"
+    }
+  },
+  "edit_roles": {
+    "title": "编辑角色",
+    "crumbs": {
+      "admin": "管理后台",
+      "users": "用户列表",
+      "edit_roles": "编辑角色"
+    },
+    "buttons": {
+      "submit": "更新"
+    }
+  }
+}

@@ -1,0 +1,5 @@
+@tailwind components;
+@tailwind utilities;
+
+/* 这里可以写你自定义的文档样式 */
+/* 注意：不要在这里写 @import 'fumadocs-ui/css/preset.css'; */

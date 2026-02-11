@@ -1,0 +1,39 @@
+{
+  "title": "Overview",
+  "description": "Key metrics and recent activity.",
+  "crumbs": {
+    "admin": "Admin",
+    "overview": "Overview"
+  },
+  "cards": {
+    "total_users": "Total Users",
+    "new_users_14d": "New Users (14d)",
+    "paid_orders_14d": "Paid Orders (14d)",
+    "revenue_14d": "Revenue (14d)",
+    "active_subscriptions": "Active Subscriptions",
+    "ai_tasks_14d": "AI Tasks (14d)",
+    "ai_success_rate_14d": "AI Success Rate (14d)"
+  },
+  "charts": {
+    "title": "Trends",
+    "revenue_14d": "Revenue (14d)",
+    "new_users_14d": "New Users (14d)"
+  },
+  "recent": {
+    "users": "Recent Users",
+    "payments": "Recent Payments",
+    "ai_tasks": "Recent AI Tasks",
+    "empty": "No data"
+  },
+  "table": {
+    "user": "User",
+    "email": "Email",
+    "time": "Time",
+    "order_no": "Order No",
+    "amount": "Amount",
+    "status": "Status",
+    "provider": "Provider",
+    "model": "Model",
+    "media_type": "Type"
+  }
+}

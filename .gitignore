@@ -1,0 +1,14 @@
+.DS_Store
+Thumbs.db
+
+**/node_modules/
+**/.next/
+**/.open-next/
+**/.vercel/
+**/.wrangler/
+**/.cache/
+
+**/.env
+**/.env.*
+!**/.env.example
+!**/.env.sample

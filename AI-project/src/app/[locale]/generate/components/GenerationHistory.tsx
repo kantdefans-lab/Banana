@@ -1,0 +1,1 @@
+export default function GenerationHistory(props: any) { return <div className='border p-4'>History</div>; }

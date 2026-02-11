@@ -1,0 +1,1 @@
+export default function CreditBalance(props: any) { return <div className='border p-4'>Credit: {props.credits || 0}</div>; }

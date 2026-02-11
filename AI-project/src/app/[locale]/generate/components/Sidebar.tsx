@@ -1,0 +1,1 @@
+export default function Sidebar(props: any) { return <div className='border p-4'>Sidebar</div>; }

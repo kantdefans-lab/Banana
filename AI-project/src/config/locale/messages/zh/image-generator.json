@@ -1,0 +1,103 @@
+{
+    "ImageGenerator": {
+      "title": "AI图像生成器",
+      "subtitle": "将想象力转化为惊艳的视觉效果",
+      "poweredBy": "由先进AI技术驱动",
+      "promptLabel": "描述您的图像",
+      "promptPlaceholder": "一条雄伟的龙在夕阳下飞越中世纪城堡，电影级光照，细节丰富，8k分辨率",
+      "promptExamples": {
+        "dragon": "一条雄伟的龙在夕阳下飞越中世纪城堡",
+        "cyberpunk": "霓虹灯和飞行汽车点缀的赛博朋克城市景观",
+        "animeGirl": "魔法森林中的可爱动漫女孩",
+        "spaceship": "未来飞船降落在外星行星上",
+        "steampunk": "维多利亚时代工作室中的蒸汽朋克机器人"
+      },
+      "copy": "复制",
+      "randomPrompt": "随机提示",
+      "characters": "字符",
+      "clear": "清空",
+      "aspectRatioLabel": "宽高比",
+      "aspectRatios": {
+        "square": "正方形",
+        "widescreen": "宽屏",
+        "standard": "标准",
+        "portrait": "纵向"
+      },
+      "styleLabel": "风格",
+      "styles": {
+        "realistic": "写实",
+        "artistic": "艺术",
+        "anime": "动漫",
+        "3d": "3D渲染",
+        "digitalArt": "数字艺术",
+        "watercolor": "水彩画"
+      },
+      "resolutionLabel": "分辨率",
+      "numImagesLabel": "图像数量",
+      "creativityLabel": "创意级别",
+      "moreAccurate": "更准确",
+      "moreCreative": "更有创意",
+      "images": "图像",
+      "features": {
+        "fast": "快速",
+        "styles": "风格",
+        "hd": "高清",
+        "batch": "批量"
+      },
+      "readyToGenerate": "准备生成",
+      "totalCredits": "总积分",
+      "clearAll": "全部清空",
+      "generateButton": "生成图像",
+      "generating": "生成中",
+      "generatedImages": "已生成图像",
+      "clearHistory": "清除历史",
+      "preview": "预览",
+      "generatingPreview": "正在生成您的图像...",
+      "thisMayTake": "这可能需要一点时间",
+      "previewAlt": "预览图像",
+      "previewPlaceholder": "您生成的图像将显示在这里",
+      "previewHint": "生成图像以查看预览",
+      "aiGenerated": "AI生成",
+      "style": "风格",
+      "ratio": "比例",
+      "download": "下载",
+      "tips": {
+        "title": "最佳效果专业提示",
+        "specific": "具体描述细节、颜色和构图",
+        "style": "包含风格参考，如'以[艺术家]风格'",
+        "lighting": "指定光照、氛围和情绪",
+        "camera": "提及相机设置以获得写实照片",
+        "negative": "使用负面提示排除不需要的元素",
+        "quality": "添加质量关键词，如'高度细节'、'8k'、'专业'"
+      },
+      "credits": {
+        "title": "积分余额",
+        "subtitle": "AI图像生成需要消耗积分",
+        "credits": "积分",
+        "perGeneration": "本次生成将消耗",
+        "remaining": "剩余",
+        "buyMore": "购买更多积分"
+      },
+      "creditsAvailable": "可用积分",
+      "upgrade": "升级",
+      "promptCopied": "提示已复制到剪贴板！",
+      "downloadSuccess": "图像下载成功！",
+      "downloadFailed": "下载图像失败",
+      "historyCleared": "历史记录已清除！",
+      "errors": {
+        "noPrompt": "请输入您的图像描述",
+        "promptTooLong": "提示过长（最多5000字符）",
+        "generationFailed": "生成图像失败，请重试"
+      },
+      "success": {
+        "generated": "成功生成{count}张图像！"
+      },
+      "navigation": {
+        "home": "首页",
+        "imageGenerator": "AI图像生成器",
+        "templates": "模板",
+        "pricing": "定价",
+        "generate": "生成"
+      }
+    }
+  }

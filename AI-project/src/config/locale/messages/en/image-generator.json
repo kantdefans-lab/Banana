@@ -1,0 +1,103 @@
+{
+    "ImageGenerator": {
+      "title": "AI Image Generator",
+      "subtitle": "Create stunning visuals from your imagination",
+      "poweredBy": "Powered by advanced AI",
+      "promptLabel": "Describe Your Image",
+      "promptPlaceholder": "A majestic dragon flying over a medieval castle at sunset, cinematic lighting, detailed, 8k",
+      "promptExamples": {
+        "dragon": "A majestic dragon flying over a medieval castle at sunset",
+        "cyberpunk": "Cyberpunk cityscape with neon lights and flying cars",
+        "animeGirl": "Cute anime girl in a magical forest with glowing mushrooms",
+        "spaceship": "Futuristic spaceship landing on an alien planet with two suns",
+        "steampunk": "Steampunk robot in a Victorian era workshop"
+      },
+      "copy": "Copy",
+      "randomPrompt": "Random Prompt",
+      "characters": "characters",
+      "clear": "Clear",
+      "aspectRatioLabel": "Aspect Ratio",
+      "aspectRatios": {
+        "square": "Square",
+        "widescreen": "Widescreen",
+        "standard": "Standard",
+        "portrait": "Portrait"
+      },
+      "styleLabel": "Style",
+      "styles": {
+        "realistic": "Realistic",
+        "artistic": "Artistic",
+        "anime": "Anime",
+        "3d": "3D Render",
+        "digitalArt": "Digital Art",
+        "watercolor": "Watercolor"
+      },
+      "resolutionLabel": "Resolution",
+      "numImagesLabel": "Number of Images",
+      "creativityLabel": "Creativity Level",
+      "moreAccurate": "More Accurate",
+      "moreCreative": "More Creative",
+      "images": "images",
+      "features": {
+        "fast": "Fast",
+        "styles": "Styles",
+        "hd": "HD",
+        "batch": "Batch"
+      },
+      "readyToGenerate": "Ready to Generate",
+      "totalCredits": "Total Credits",
+      "clearAll": "Clear All",
+      "generateButton": "Generate Image",
+      "generating": "Generating",
+      "generatedImages": "Generated Images",
+      "clearHistory": "Clear History",
+      "preview": "Preview",
+      "generatingPreview": "Generating your image...",
+      "thisMayTake": "This may take a moment",
+      "previewAlt": "Preview image",
+      "previewPlaceholder": "Your generated image will appear here",
+      "previewHint": "Generate an image to see the preview",
+      "aiGenerated": "AI Generated",
+      "style": "Style",
+      "ratio": "Ratio",
+      "download": "Download",
+      "tips": {
+        "title": "Pro Tips for Best Results",
+        "specific": "Be specific about details, colors, and composition",
+        "style": "Include style references like 'in the style of [artist]'",
+        "lighting": "Specify lighting, mood, and atmosphere",
+        "camera": "Mention camera settings for realistic photos",
+        "negative": "Use negative prompts to exclude unwanted elements",
+        "quality": "Add quality keywords like 'highly detailed', '8k', 'professional'"
+      },
+      "credits": {
+        "title": "Credits Balance",
+        "subtitle": "AI image generation requires credits",
+        "credits": "credits",
+        "perGeneration": "This generation will use",
+        "remaining": "Will remain",
+        "buyMore": "Buy More Credits"
+      },
+      "creditsAvailable": "Credits Available",
+      "upgrade": "Upgrade",
+      "promptCopied": "Prompt copied to clipboard!",
+      "downloadSuccess": "Image downloaded successfully!",
+      "downloadFailed": "Failed to download image",
+      "historyCleared": "History cleared successfully!",
+      "errors": {
+        "noPrompt": "Please enter a description for your image",
+        "promptTooLong": "Prompt is too long (max 5000 characters)",
+        "generationFailed": "Failed to generate image. Please try again."
+      },
+      "success": {
+        "generated": "Successfully generated {count} image(s)!"
+      },
+      "navigation": {
+        "home": "Home",
+        "imageGenerator": "AI Image Generator",
+        "templates": "Templates",
+        "pricing": "Pricing",
+        "generate": "Generate"
+      }
+    }
+  }

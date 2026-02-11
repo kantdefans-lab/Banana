@@ -1,0 +1,1 @@
+export default function PromptInput(props: any) { return <div className='border p-4'>Prompt Input</div>; }

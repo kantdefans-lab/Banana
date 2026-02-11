@@ -1,0 +1,149 @@
+/* /Users/huyaru/Documents/shipany-template/src/app/[locale]/globals.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* 黑色主题 */
+    --background: 0 0% 0%;         /* 纯黑色 */
+    --foreground: 0 0% 95%;        /* 白色文字 */
+    --card: 240 10% 4%;           /* 深灰色卡片背景 */
+    --card-foreground: 0 0% 95%;
+    --popover: 240 10% 4%;
+    --popover-foreground: 0 0% 95%;
+    --primary: 263 70% 50%;       /* 紫色 */
+    --primary-foreground: 0 0% 100%;
+    --secondary: 240 5% 15%;
+    --secondary-foreground: 0 0% 95%;
+    --muted: 240 4% 46%;
+    --muted-foreground: 240 5% 65%;
+    --accent: 240 5% 15%;
+    --accent-foreground: 0 0% 95%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 95%;
+    --border: 240 4% 16%;         /* 深灰色边框 */
+    --input: 240 4% 16%;
+    --ring: 263 70% 50%;
+    --radius: 0.5rem;
+    
+    /* 橙色高亮变量 */
+    --highlight: 25 95% 53%;      /* 橙色 #FF6B35 */
+    --highlight-foreground: 0 0% 100%;
+    --highlight-hover: 25 100% 60%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: 'rlig' 1, 'calt' 1;
+  }
+}
+
+/* ProcessSteps 专用黑色主题样式 */
+.gradient-glow-text {
+  background: linear-gradient(90deg, #FF6B35, #FFA726);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-glow-bg {
+  background: linear-gradient(135deg, 
+    rgba(255, 107, 53, 0.15) 0%, 
+    rgba(255, 167, 38, 0.08) 50%,
+    rgba(255, 107, 53, 0.03) 100%
+  );
+  position: relative;
+  overflow: hidden;
+}
+
+.gradient-glow-bg::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(255, 107, 53, 0.2), 
+    transparent
+  );
+  transition: left 0.7s ease;
+}
+
+.group:hover .gradient-glow-bg::before {
+  left: 100%;
+}
+
+/* 深色模式下的卡片阴影 */
+.shadow-lg {
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+.hover\:shadow-xl:hover {
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+}
+
+/* 隐藏滚动条样式 */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;     /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Chrome, Safari and Opera */
+}
+
+/* 渐变颜色变量 */
+:root {
+  --highlight: 210 100% 50%; /* 示例值，根据您的实际颜色调整 */
+}
+
+/* 确保文本截断正常工作 */
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+:root {
+  /* 文本颜色 */
+  --foreground: 0 0% 100%; /* 白色文本 */
+  --card-foreground: 0 0% 100%; /* 白色文本 */
+  --muted-foreground: 210 20% 80%; /* 浅灰色文本 */
+  
+  /* 高亮色 */
+  --highlight: 210 100% 50%; /* 蓝色高亮 */
+  --highlight-light: 210 100% 50% / 0.1; /* 浅蓝色背景 */
+  
+  /* 渐变颜色 */
+  --gradient-start: 210 100% 50%;
+  --gradient-end: 280 100% 50%;
+  
+  /* 主色调 */
+  --primary: 217 91% 60%;
+  --primary-foreground: 0 0% 100%;
+  
+  /* 背景色 */
+  --background: 230 12% 8%;
+  --card: 230 12% 12%;
+  --form-background: 230 12% 12%;
+  --border: 230 12% 20%;
+}
+
+body {
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+}
+
+.prose.text-white p,
+.prose.text-white strong,
+.prose.text-white span {
+  color: white !important;
+}

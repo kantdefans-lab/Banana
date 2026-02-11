@@ -1,0 +1,1 @@
+export default function ImageGallery(props: any) { return <div className='border p-4'>Image Gallery</div>; }

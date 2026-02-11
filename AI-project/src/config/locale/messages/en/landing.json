@@ -1,0 +1,76 @@
+{
+  "Landing": {
+    "hero": {
+      "title": "Create Stunning AI Art",
+      "subtitle": "In Just 5 Seconds",
+      "description": "Transform your ideas into breathtaking images using the world's leading AI models"
+    },
+    "button": {
+      "generate": "Generate Image"
+    },
+    "input": {
+      "try": "Try:"
+    },
+    "quickPrompts": {
+      "cat": "A cat reading in a cafe",
+      "city": "Future city night view, cyberpunk style",
+      "landscape": "Mountain and water scenery, ink painting style",
+      "space": "Sci-fi space station, astronaut, galaxy"
+    },
+    "stats": {
+      "time": "5s",
+      "timeLabel": "Average Generation Time",
+      "models": "10+",
+      "modelsLabel": "AI Models",
+      "images": "1M+",
+      "imagesLabel": "Images Generated",
+      "availability": "99.9%",
+      "availabilityLabel": "Service Availability"
+    }
+  },
+  "pricing": {
+    "title": "Pricing Plans",
+    "description": "Choose the plan that fits your needs",
+    "popular": "Most Popular",
+    "cta": "Get Started",
+    "features": {
+      "generations": "Generations per month",
+      "speed": "Generation speed",
+      "commercial": "Commercial usage",
+      "support": "Priority support"
+    }
+  },
+  "faq": [
+    {
+      "question": "What are credits?",
+      "answer": "Credits are the currency used to generate images. 1 generation = 1 credit."
+    },
+    {
+      "question": "Can I cancel my subscription?",
+      "answer": "Yes, you can cancel your subscription at any time from your account settings."
+    },
+    {
+      "question": "Is my payment information secure?",
+      "answer": "Yes, all payments are processed securely through Stripe."
+    },
+    {
+      "question": "Do unused credits roll over?",
+      "answer": "No, credits reset at the beginning of each billing cycle."
+    }
+  ],
+  "testimonials": [
+    {
+      "content": "This AI tool has completely revolutionized my workflow!",
+      "author": "Sarah J.",
+      "role": "Designer"
+    },
+    {
+      "content": "The quality of the images is mind-blowing.",
+      "author": "Mike T.",
+      "role": "Content Creator"
+    }
+  ],
+  "cta": "Get Started Now",
+  "title": "AI Tools",
+  "description": "Powerful AI features"
+}

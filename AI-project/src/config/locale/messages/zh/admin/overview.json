@@ -1,0 +1,39 @@
+{
+  "title": "概览",
+  "description": "关键指标与近期动态",
+  "crumbs": {
+    "admin": "后台",
+    "overview": "概览"
+  },
+  "cards": {
+    "total_users": "用户总数",
+    "new_users_14d": "近14天新增用户",
+    "paid_orders_14d": "近14天支付订单",
+    "revenue_14d": "近14天收入",
+    "active_subscriptions": "有效订阅",
+    "ai_tasks_14d": "近14天AI任务",
+    "ai_success_rate_14d": "近14天AI成功率"
+  },
+  "charts": {
+    "title": "趋势",
+    "revenue_14d": "近14天收入趋势",
+    "new_users_14d": "近14天新增用户"
+  },
+  "recent": {
+    "users": "最近注册用户",
+    "payments": "最近支付订单",
+    "ai_tasks": "最近AI任务",
+    "empty": "暂无数据"
+  },
+  "table": {
+    "user": "用户",
+    "email": "邮箱",
+    "time": "时间",
+    "order_no": "订单号",
+    "amount": "金额",
+    "status": "状态",
+    "provider": "提供方",
+    "model": "模型",
+    "media_type": "类型"
+  }
+}

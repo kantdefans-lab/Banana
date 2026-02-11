@@ -1,0 +1,76 @@
+{
+  "Landing": {
+    "hero": {
+      "title": "创建令人惊叹的 AI 艺术",
+      "subtitle": "只需 5 秒",
+      "description": "使用世界领先的 AI 模型将您的想法转化为令人惊叹的图像"
+    },
+    "button": {
+      "generate": "生成图像"
+    },
+    "input": {
+      "try": "尝试："
+    },
+    "quickPrompts": {
+      "cat": "一只在咖啡馆看书的猫",
+      "city": "未来城市夜景，赛博朋克风格",
+      "landscape": "山水风景，水墨画风格",
+      "space": "科幻空间站，宇航员，银河"
+    },
+    "stats": {
+      "time": "5秒",
+      "timeLabel": "平均生成时间",
+      "models": "10+",
+      "modelsLabel": "AI 模型",
+      "images": "100万+",
+      "imagesLabel": "已生成图像",
+      "availability": "99.9%",
+      "availabilityLabel": "服务可用性"
+    }
+  },
+  "pricing": {
+    "title": "价格方案",
+    "description": "选择适合您的方案",
+    "popular": "最受欢迎",
+    "cta": "立即开始",
+    "features": {
+      "generations": "每月生成次数",
+      "speed": "生成速度",
+      "commercial": "商业用途",
+      "support": "优先支持"
+    }
+  },
+  "faq": [
+    {
+      "question": "什么是积分(Credits)？",
+      "answer": "积分是用于生成图片的货币。生成一张图片消耗 1 个积分。"
+    },
+    {
+      "question": "我可以随时取消订阅吗？",
+      "answer": "是的，您可以随时在账户设置中取消订阅。"
+    },
+    {
+      "question": "支付信息安全吗？",
+      "answer": "是的，所有支付均通过 Stripe 安全处理。"
+    },
+    {
+      "question": "未使用的积分会累积吗？",
+      "answer": "不会，积分会在每个计费周期开始时重置。"
+    }
+  ],
+  "testimonials": [
+    {
+      "content": "这个 AI 工具彻底改变了我的工作流程！",
+      "author": "Sarah J.",
+      "role": "设计师"
+    },
+    {
+      "content": "生成的图片质量令人惊叹。",
+      "author": "Mike T.",
+      "role": "内容创作者"
+    }
+  ],
+  "cta": "立即开始",
+  "title": "AI 工具",
+  "description": "生成令人惊叹的内容"
+}

@@ -1,0 +1,41 @@
+// prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  // ✅ v5 版本写法：直接在 schema 里读取环境变量
+  url      = env("DATABASE_URL")
+}
+
+// 完整的 AiTask 模型定义
+model AiTask {
+  // 🔑 必须有 @id 标记为主键
+  id          String   @id @default(uuid())
+  
+  // 对应数据库中的 user_id
+  userId      String   @map("user_id")
+  // 对应 media_type
+  mediaType   String   @map("media_type")
+  
+  model       String?
+  prompt      String?
+  options     String?  // 存 JSON 字符串
+  status      String?
+  
+  // 对应 task_info
+  taskInfo    String?  @map("task_info")
+  // 对应 task_result
+  taskResult  String?  @map("task_result")
+  
+  scene       String?
+  
+  // 时间字段
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  // 映射到数据库表名 "ai_task"
+  @@map("ai_task")
+}

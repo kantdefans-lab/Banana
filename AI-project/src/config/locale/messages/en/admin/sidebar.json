@@ -1,0 +1,181 @@
+{
+  "header": {
+    "brand": {
+      "title": "ShipAny Two",
+      "logo": {
+        "src": "/logo.png",
+        "alt": "ShipAny Two"
+      },
+      "url": "/admin"
+    },
+    "show_trigger": true
+  },
+  "main_navs": [
+    {
+      "title": "System",
+      "items": [
+        {
+          "title": "Overview",
+          "icon": "LayoutDashboard",
+          "url": "/admin/overview",
+          "permission_code": "admin.access"
+        },
+        {
+          "title": "Users & Permissions",
+          "icon": "User",
+          "is_expand": true,
+          "children": [
+            {
+              "title": "Users",
+              "url": "/admin/users",
+              "icon": "User",
+              "permission_code": "admin.users.read"
+            },
+            {
+              "title": "Roles",
+              "url": "/admin/roles",
+              "icon": "Users",
+              "permission_code": "admin.roles.read"
+            },
+            {
+              "title": "Permissions",
+              "url": "/admin/permissions",
+              "icon": "ShieldCheck",
+              "permission_code": "admin.permissions.read"
+            }
+          ]
+        },
+        {
+          "title": "Pages & Content",
+          "icon": "FileText",
+          "children": [
+            {
+              "title": "Categories",
+              "icon": "Folder",
+              "url": "/admin/categories",
+              "permission_code": "admin.categories.read"
+            },
+            {
+              "title": "Posts",
+              "icon": "FileText",
+              "url": "/admin/posts",
+              "permission_code": "admin.posts.read"
+            }
+          ]
+        },
+        {
+          "title": "Payments & Credits",
+          "icon": "DollarSign",
+          "children": [
+            {
+              "title": "Payments",
+              "url": "/admin/payments",
+              "icon": "DollarSign",
+              "permission_code": "admin.payments.read"
+            },
+            {
+              "title": "Subscriptions",
+              "url": "/admin/subscriptions",
+              "icon": "CreditCard",
+              "permission_code": "admin.subscriptions.read"
+            },
+            {
+              "title": "Credits",
+              "url": "/admin/credits",
+              "icon": "Coins",
+              "permission_code": "admin.credits.read"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Business",
+      "items": [
+        {
+          "title": "AI Tasks",
+          "url": "/admin/ai-tasks",
+          "icon": "Brain",
+          "permission_code": "admin.ai-tasks.read"
+        },
+        {
+          "title": "AI Chats",
+          "url": "/admin/chats",
+          "icon": "MessageCircle",
+          "permission_code": "admin.ai-tasks.read"
+        }
+      ]
+    }
+  ],
+  "bottom_nav": {
+    "items": [
+      {
+        "title": "Settings",
+        "url": "/admin/settings/general",
+        "icon": "Settings",
+        "permission_all": ["admin.settings.read", "admin.settings.write"]
+      },
+      {
+        "title": "API Keys",
+        "url": "/admin/apikeys",
+        "icon": "Key",
+        "permission_code": "admin.apikeys.read"
+      }
+    ]
+  },
+  "user": {
+    "nav": {
+      "items": [
+        {
+          "title": "Profile",
+          "url": "/settings/profile",
+          "icon": "User",
+          "target": "_blank"
+        }
+      ]
+    },
+    "show_email": false,
+    "show_signout": true,
+    "signout_callback": "/"
+  },
+  "footer": {
+    "nav": {
+      "items": [
+        {
+          "title": "Home",
+          "url": "/",
+          "icon": "Home",
+          "target": "_blank"
+        },
+        {
+          "title": "GitHub",
+          "url": "https://github.com/your-app-name",
+          "icon": "Github",
+          "target": "_blank"
+        },
+        {
+          "title": "Twitter",
+          "url": "https://twitter.com/your-app-name",
+          "icon": "RiTwitterXFill",
+          "target": "_blank"
+        },
+        {
+          "title": "Discord",
+          "url": "https://discord.gg/your-app-name",
+          "icon": "RiDiscordFill",
+          "target": "_blank"
+        },
+        {
+          "title": "Email",
+          "url": "mailto:support@your-domain.com",
+          "icon": "Mail",
+          "target": "_blank"
+        }
+      ]
+    },
+    "show_theme": true,
+    "show_locale": false
+  },
+  "variant": "sidebar",
+  "collapsible": "icon"
+}
