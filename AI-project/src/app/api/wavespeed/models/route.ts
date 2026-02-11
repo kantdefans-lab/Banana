@@ -199,6 +199,32 @@ function parseCsv(value: string | null): string[] {
 
 export async function GET(request: NextRequest) {
   try {
+    const debugParams = new URL(request.url).searchParams;
+    if (debugParams.get('debug') === '1') {
+      const symbol = Symbol.for('__cloudflare-context__');
+      const cfContext = (globalThis as any)?.[symbol];
+      const cfEnv = cfContext?.env || {};
+      const globalEnv = (globalThis as any)?.env || {};
+      const hasProcessEnv = typeof process !== 'undefined' && !!process.env;
+      const processEnvKey = hasProcessEnv ? process.env.WAVESPEED_API_KEY : undefined;
+      const cfEnvKey = cfEnv?.WAVESPEED_API_KEY;
+      const globalEnvKey = globalEnv?.WAVESPEED_API_KEY;
+
+      return NextResponse.json({
+        code: 0,
+        message: 'debug',
+        data: {
+          hasProcessEnv,
+          processEnvHasKey: !!processEnvKey,
+          hasCfContext: !!cfContext,
+          cfEnvHasKey: !!cfEnvKey,
+          hasGlobalEnv: !!globalEnv,
+          globalEnvHasKey: !!globalEnvKey,
+          nextRuntime: (process as any)?.env?.NEXT_RUNTIME || '',
+        },
+      });
+    }
+
     const configs = await getAllConfigs();
     const apiKey = String(
       configs.wavespeed_api_key || getRuntimeEnv('WAVESPEED_API_KEY') || ''
