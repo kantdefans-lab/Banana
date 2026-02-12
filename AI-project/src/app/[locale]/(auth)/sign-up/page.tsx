@@ -1,10 +1,9 @@
 import { getTranslations } from 'next-intl/server';
 
-import { redirect } from '@/core/i18n/navigation';
 import { envConfigs } from '@/config';
 import { defaultLocale } from '@/config/locale';
 import { SignUp } from '@/shared/blocks/sign/sign-up';
-import { getPublicConfigs } from '@/shared/models/config';
+import { getConfigs } from '@/shared/models/config';
 
 export async function generateMetadata({
   params,
@@ -27,20 +26,13 @@ export async function generateMetadata({
 }
 
 export default async function SignUpPage({
-  params,
   searchParams,
 }: {
-  params: Promise<{ locale: string }>;
   searchParams: Promise<{ callbackUrl?: string }>;
 }) {
-  const { locale } = await params;
   const { callbackUrl } = await searchParams;
 
-  const configs = await getPublicConfigs();
-
-  if (configs.auth_google_only === 'true') {
-    redirect({ href: '/sign-in', locale });
-  }
+  const configs = await getConfigs();
 
   return <SignUp configs={configs} callbackUrl={callbackUrl || '/'} />;
 }

@@ -17,13 +17,11 @@ enabled = true
 
 [vars]
 # app
-NEXT_PUBLIC_APP_URL = "https://luminglobal.ai"
+NEXT_PUBLIC_APP_URL = "http://localhost:3000"
 NEXT_PUBLIC_APP_NAME = "Your App Name"
 
 # better-auth base URL (set to your production origin in Cloudflare dashboard)
-AUTH_URL = "https://luminglobal.ai"
-# Google-only auth mode (optional)
-AUTH_GOOGLE_ONLY = "false"
+AUTH_URL = "http://localhost:3000"
 
 # theme
 NEXT_PUBLIC_THEME = "default"

@@ -6,36 +6,15 @@ import { getRuntimeEnv } from '@/shared/lib/env';
 import { db } from '@/core/db';
 import { getAuth } from '@/core/auth';
 
-type AuthErrorPayload = {
-  code?: string;
-  message?: string;
-  hint?: string;
-  errorId?: string;
-  [key: string]: unknown;
-};
-
 async function logErrorResponse(
   label: string,
   response: Response,
   errorId?: string
 ) {
   if (response.status < 400) return response;
-
-  let bodyText = '';
-  let parsedBody: AuthErrorPayload | null = null;
-
   try {
     const cloned = response.clone();
-    bodyText = await cloned.text();
-    try {
-      const raw = JSON.parse(bodyText);
-      if (raw && typeof raw === 'object' && !Array.isArray(raw)) {
-        parsedBody = raw as AuthErrorPayload;
-      }
-    } catch {
-      // ignore JSON parse errors
-    }
-
+    const bodyText = await cloned.text();
     const tag = errorId ? `[Auth ${label}][${errorId}]` : `[Auth ${label}]`;
     console.error(`${tag} ${response.status} ${response.statusText} body:`, bodyText);
   } catch (e) {
@@ -45,30 +24,7 @@ async function logErrorResponse(
       e
     );
   }
-
-  if (!parsedBody) {
-    if (!errorId) return response;
-    return withErrorIdHeader(response, errorId);
-  }
-
-  const hint = getAuthErrorHint(parsedBody.code, parsedBody.message);
-  const normalizedBody: AuthErrorPayload = {
-    ...parsedBody,
-    ...(hint ? { hint } : {}),
-    ...(errorId ? { errorId } : {}),
-  };
-
-  const headers = new Headers(response.headers);
-  headers.set('content-type', 'application/json; charset=utf-8');
-  if (errorId) {
-    headers.set('x-auth-error-id', errorId);
-  }
-
-  return new Response(JSON.stringify(normalizedBody), {
-    status: response.status,
-    statusText: response.statusText,
-    headers,
-  });
+  return response;
 }
 
 function logAuthEnvHints(request: Request, errorId?: string) {
@@ -90,9 +46,9 @@ function logAuthEnvHints(request: Request, errorId?: string) {
   }
 }
 
-async function logDbDiagnostics(errorId?: string, force = false) {
+async function logDbDiagnostics(errorId?: string) {
   // Only run when explicitly enabled (can be noisy and may add latency).
-  if (!force && getRuntimeEnv('AUTH_DEBUG') !== 'true') {
+  if (getRuntimeEnv('AUTH_DEBUG') !== 'true') {
     return;
   }
 
@@ -135,47 +91,28 @@ function createAuthErrorId() {
   return `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
 }
 
-function getAuthErrorHint(code?: string, message?: string) {
-  const normalizedCode = (code || '').toUpperCase();
-  const normalizedMessage = message || '';
-
-  if (normalizedCode === 'PROVIDER_NOT_FOUND') {
-    return 'Social provider is not configured. Check google/github auth settings and provider credentials.';
-  }
-
-  if (normalizedCode === 'FAILED_TO_GET_SESSION') {
-    return 'Session query failed. Verify auth tables exist and DATABASE_URL points to the correct database.';
-  }
-
-  if (
-    /HYPERDRIVE binding|ALLOW_DIRECT_DB_IN_WORKERS|direct database access is disabled/i.test(
-      normalizedMessage
-    )
-  ) {
+function getAuthErrorHint(message: string) {
+  if (/HYPERDRIVE binding|ALLOW_DIRECT_DB_IN_WORKERS|direct database access is disabled/i.test(message)) {
     return 'Set ALLOW_DIRECT_DB_IN_WORKERS=true for direct Postgres, or bind HYPERDRIVE in Cloudflare.';
   }
 
-  if (/DATABASE_URL is not set/i.test(normalizedMessage)) {
+  if (/DATABASE_URL is not set/i.test(message)) {
     return 'Set DATABASE_URL in Cloudflare Worker runtime variables for preview and production.';
   }
 
   if (
     /BETTER_AUTH_SECRET is missing|default secret|Invalid BETTER_AUTH_SECRET/i.test(
-      normalizedMessage
+      message
     )
   ) {
     return 'Set AUTH_SECRET (or BETTER_AUTH_SECRET) as a 32+ character secret in Cloudflare secrets.';
   }
 
-  if (
-    /trusted origin|base url could not be determined|callbacks and redirects/i.test(
-      normalizedMessage
-    )
-  ) {
+  if (/trusted origin|base url could not be determined|callbacks and redirects/i.test(message)) {
     return 'Set AUTH_URL to your production origin and redeploy.';
   }
 
-  if (/timeout after/i.test(normalizedMessage)) {
+  if (/timeout after/i.test(message)) {
     return 'Auth request timed out. Verify DATABASE_URL reachability or switch to Hyperdrive.';
   }
 
@@ -233,17 +170,9 @@ export async function POST(request: Request) {
     if (resp.status >= 500) {
       const errorId = createAuthErrorId();
       logAuthEnvHints(request, errorId);
-      const cloned = resp.clone();
-      let code = '';
-      try {
-        const payload = (await cloned.json()) as AuthErrorPayload;
-        code = String(payload?.code || '');
-      } catch {
-        code = '';
-      }
-      await logDbDiagnostics(errorId, code === 'FAILED_TO_GET_SESSION');
+      await logDbDiagnostics(errorId);
       const loggedResponse = await logErrorResponse('POST', resp, errorId);
-      return loggedResponse;
+      return withErrorIdHeader(loggedResponse, errorId);
     }
     return await logErrorResponse('POST', resp);
   } catch (error: any) {
@@ -253,7 +182,7 @@ export async function POST(request: Request) {
     await logDbDiagnostics(errorId);
 
     const message = getErrorMessage(error);
-    const hint = getAuthErrorHint(undefined, message);
+    const hint = getAuthErrorHint(message);
     const isTimeout = /timeout after/i.test(message);
     return NextResponse.json(
       { code: 1, message, hint, errorId },
@@ -273,17 +202,9 @@ export async function GET(request: Request) {
     if (resp.status >= 500) {
       const errorId = createAuthErrorId();
       logAuthEnvHints(request, errorId);
-      const cloned = resp.clone();
-      let code = '';
-      try {
-        const payload = (await cloned.json()) as AuthErrorPayload;
-        code = String(payload?.code || '');
-      } catch {
-        code = '';
-      }
-      await logDbDiagnostics(errorId, code === 'FAILED_TO_GET_SESSION');
+      await logDbDiagnostics(errorId);
       const loggedResponse = await logErrorResponse('GET', resp, errorId);
-      return loggedResponse;
+      return withErrorIdHeader(loggedResponse, errorId);
     }
     return await logErrorResponse('GET', resp);
   } catch (error: any) {
@@ -293,7 +214,7 @@ export async function GET(request: Request) {
     await logDbDiagnostics(errorId);
 
     const message = getErrorMessage(error);
-    const hint = getAuthErrorHint(undefined, message);
+    const hint = getAuthErrorHint(message);
     const isTimeout = /timeout after/i.test(message);
 
     return NextResponse.json(
