@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { toNextJsHandler } from 'better-auth/next-js';
 
+import { getRuntimeEnv } from '@/shared/lib/env';
 import { getAuth } from '@/core/auth';
 
 async function logErrorResponse(label: string, response: Response) {
@@ -15,17 +16,66 @@ async function logErrorResponse(label: string, response: Response) {
   return response;
 }
 
+function getErrorMessage(error: unknown) {
+  if (error instanceof Error && error.message) {
+    return error.message;
+  }
+
+  if (typeof error === 'string' && error) {
+    return error;
+  }
+
+  return 'Unknown error';
+}
+
+function getAuthHandlerTimeoutMs() {
+  const raw =
+    getRuntimeEnv('AUTH_HANDLER_TIMEOUT_MS') ||
+    process.env.AUTH_HANDLER_TIMEOUT_MS ||
+    '12000';
+  const parsed = Number(raw);
+  if (!Number.isFinite(parsed) || parsed <= 0) {
+    return 12000;
+  }
+
+  return parsed;
+}
+
+async function withTimeout<T>(promise: Promise<T>, label: string) {
+  const timeoutMs = getAuthHandlerTimeoutMs();
+  let timeoutId: ReturnType<typeof setTimeout> | null = null;
+
+  try {
+    return await Promise.race([
+      promise,
+      new Promise<T>((_, reject) => {
+        timeoutId = setTimeout(() => {
+          reject(new Error(`${label} timeout after ${timeoutMs}ms`));
+        }, timeoutMs);
+      }),
+    ]);
+  } finally {
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+    }
+  }
+}
+
 export async function POST(request: Request) {
   try {
     const auth = await getAuth();
     const handler = toNextJsHandler(auth.handler);
-    const resp = await handler.POST(request);
+    const resp = await withTimeout(handler.POST(request), 'Auth POST');
     return await logErrorResponse('POST', resp);
   } catch (error: any) {
     console.error('Auth POST error:', error);
+
+    const message = getErrorMessage(error);
+    const isTimeout = /timeout after/i.test(message);
+
     return NextResponse.json(
-      { code: 1, message: error?.message || 'Unknown error' },
-      { status: 500 }
+      { code: 1, message },
+      { status: isTimeout ? 504 : 500 }
     );
   }
 }
@@ -34,13 +84,17 @@ export async function GET(request: Request) {
   try {
     const auth = await getAuth();
     const handler = toNextJsHandler(auth.handler);
-    const resp = await handler.GET(request);
+    const resp = await withTimeout(handler.GET(request), 'Auth GET');
     return await logErrorResponse('GET', resp);
   } catch (error: any) {
     console.error('Auth GET error:', error);
+
+    const message = getErrorMessage(error);
+    const isTimeout = /timeout after/i.test(message);
+
     return NextResponse.json(
-      { code: 1, message: error?.message || 'Unknown error' },
-      { status: 500 }
+      { code: 1, message },
+      { status: isTimeout ? 504 : 500 }
     );
   }
 }

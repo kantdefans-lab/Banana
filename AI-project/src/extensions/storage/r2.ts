@@ -91,15 +91,21 @@ export class R2Provider implements StorageProvider {
       const response = await client.fetch(request);
 
       if (!response.ok) {
+        let detail = '';
+        try {
+          detail = (await response.text()).trim();
+        } catch {
+          detail = '';
+        }
         return {
           success: false,
-          error: `Upload failed: ${response.statusText}`,
+          error: `Upload failed: ${response.status} ${response.statusText}${detail ? ` - ${detail.slice(0, 300)}` : ''}`,
           provider: this.name,
         };
       }
 
       const publicUrl = this.configs.publicDomain
-        ? `${this.configs.publicDomain}/${objectPath}`
+        ? this.getPublicUrl(objectPath)
         : url;
 
       return {
@@ -119,6 +125,19 @@ export class R2Provider implements StorageProvider {
         provider: this.name,
       };
     }
+  }
+
+  private getPublicUrl(objectPath: string) {
+    const domain = (this.configs.publicDomain || '').trim().replace(/\/+$/, '');
+    if (!domain) {
+      return objectPath;
+    }
+
+    if (domain.startsWith('http://') || domain.startsWith('https://')) {
+      return `${domain}/${objectPath}`;
+    }
+
+    return `https://${domain}/${objectPath}`;
   }
 
   async downloadAndUpload(

@@ -7,6 +7,22 @@ import { isCloudflareWorker } from '@/shared/lib/env';
 // Global database connection instance (singleton pattern)
 let dbInstance: ReturnType<typeof drizzle> | null = null;
 let client: ReturnType<typeof postgres> | null = null;
+let hasLoggedWorkerSingletonWarning = false;
+
+function shouldUseSsl(databaseUrl: string) {
+  try {
+    const { hostname } = new URL(databaseUrl);
+    const isLocalHost =
+      hostname === 'localhost' ||
+      hostname === '127.0.0.1' ||
+      hostname === '::1' ||
+      hostname === '[::1]';
+
+    return !isLocalHost;
+  } catch {
+    return true;
+  }
+}
 
 export function db() {
   let databaseUrl = envConfigs.database_url;
@@ -32,29 +48,31 @@ export function db() {
 
   // In Cloudflare Workers, prefer singleton if enabled
   if (isCloudflareWorker) {
-    const maxConnections = Number(envConfigs.db_max_connections) || 1;
-    const useSingleton = envConfigs.db_singleton_enabled === 'true';
-
-    if (useSingleton && dbInstance && client) {
-      return dbInstance;
+    const requestedSingleton = envConfigs.db_singleton_enabled === 'true';
+    if (requestedSingleton && !hasLoggedWorkerSingletonWarning) {
+      hasLoggedWorkerSingletonWarning = true;
+      console.warn(
+        '[db] DB_SINGLETON_ENABLED=true is ignored in Cloudflare Workers to avoid hanging requests.'
+      );
     }
 
-    // Workers environment uses minimal configuration
+    const maxConnections = Math.max(
+      1,
+      Math.min(Number(envConfigs.db_max_connections) || 1, 5)
+    );
+
+    // Create short-lived clients per request in Workers.
+    // Reusing singleton clients across fetch events can lead to hung requests.
     const workerClient = postgres(databaseUrl, {
       prepare: false,
-      max: maxConnections, // Allow configurable pool size in Workers
-      idle_timeout: 10, // Shorter timeout for Workers
-      connect_timeout: 5,
+      max: maxConnections,
+      idle_timeout: 10,
+      max_lifetime: 60,
+      connect_timeout: 8,
+      ssl: shouldUseSsl(databaseUrl) ? 'require' : undefined,
     });
 
-    const workerDb = drizzle({ client: workerClient });
-
-    if (useSingleton) {
-      client = workerClient;
-      dbInstance = workerDb;
-    }
-
-    return workerDb;
+    return drizzle({ client: workerClient });
   }
 
   // Singleton mode: reuse existing connection (good for traditional servers and serverless warm starts)
@@ -70,6 +88,7 @@ export function db() {
       max: Number(envConfigs.db_max_connections) || 1, // Maximum connections in pool (default 1)
       idle_timeout: 30, // Idle connection timeout (seconds)
       connect_timeout: 10, // Connection timeout (seconds)
+      ssl: shouldUseSsl(databaseUrl) ? 'require' : undefined,
     });
 
     dbInstance = drizzle({ client });
@@ -83,6 +102,7 @@ export function db() {
     max: 1, // Use single connection in serverless
     idle_timeout: 20,
     connect_timeout: 10,
+    ssl: shouldUseSsl(databaseUrl) ? 'require' : undefined,
   });
 
   return drizzle({ client: serverlessClient });
@@ -91,7 +111,7 @@ export function db() {
 // Optional: Function to close database connection (useful for testing or graceful shutdown)
 // Note: Only works in singleton mode
 export async function closeDb() {
-  if (envConfigs.db_singleton_enabled && client) {
+  if (envConfigs.db_singleton_enabled === 'true' && client) {
     await client.end();
     client = null;
     dbInstance = null;

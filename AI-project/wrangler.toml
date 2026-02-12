@@ -31,7 +31,8 @@ NEXT_PUBLIC_APPEARANCE = "system"
 
 # database
 DATABASE_PROVIDER = "postgresql"
-DB_SINGLETON_ENABLED = "true"
+# Keep disabled on Workers to avoid hung requests from cross-request DB client reuse.
+DB_SINGLETON_ENABLED = "false"
 DB_MAX_CONNECTIONS = "1"
 
 # auth secret

@@ -26,6 +26,16 @@ export function LoginModal({ isOpen, onClose }: LoginModalProps) {
 
   const router = useRouter();
 
+  const getAuthErrorMessage = (error: any) => {
+    return (
+      error?.message ||
+      error?.statusText ||
+      error?.code ||
+      error?.cause?.message ||
+      'Unknown error'
+    );
+  };
+
   // 禁止背景滚动
   useEffect(() => {
     if (isOpen) {
@@ -73,7 +83,7 @@ export function LoginModal({ isOpen, onClose }: LoginModalProps) {
 
         // 检查返回结果中是否有 error
         if (res?.error) {
-          alert('Login failed: ' + (res.error.message || 'Unknown error'));
+          alert('Login failed: ' + getAuthErrorMessage(res.error));
         } else {
           // 登录成功
           onClose();
@@ -91,7 +101,7 @@ export function LoginModal({ isOpen, onClose }: LoginModalProps) {
         });
 
         if (res?.error) {
-          alert('Registration failed: ' + (res.error.message || 'Unknown error'));
+          alert('Registration failed: ' + getAuthErrorMessage(res.error));
         } else {
           alert('Account created successfully! Please log in.');
           setMode('signin');

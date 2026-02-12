@@ -3,6 +3,7 @@ import { revalidateTag, unstable_cache } from 'next/cache';
 import { db } from '@/core/db';
 import { envConfigs } from '@/config';
 import { config } from '@/config/db/schema';
+import { getRuntimeEnv } from '@/shared/lib/env';
 import {
   getAllSettingNames,
   publicSettingNames,
@@ -122,8 +123,12 @@ export async function getAllConfigs(): Promise<Configs> {
     // use env configs if available
     if (process.env[upperKey]) {
       dbConfigs[key] = process.env[upperKey] ?? '';
+    } else if (getRuntimeEnv(upperKey)) {
+      dbConfigs[key] = getRuntimeEnv(upperKey) ?? '';
     } else if (process.env[key]) {
       dbConfigs[key] = process.env[key] ?? '';
+    } else if (getRuntimeEnv(key)) {
+      dbConfigs[key] = getRuntimeEnv(key) ?? '';
     }
   });
 

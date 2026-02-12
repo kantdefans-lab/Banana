@@ -620,8 +620,14 @@ const VideoGenerator = ({
              const formData = new FormData();
              formData.append('file', selectedImage);
              const uploadRes = await fetch('/api/upload', { method: 'POST', body: formData });
-             if (!uploadRes.ok) throw new Error('Image upload failed');
-             const uploadData = await uploadRes.json();
+             const rawText = await uploadRes.text();
+             let uploadData: any = {};
+             try {
+               uploadData = rawText ? JSON.parse(rawText) : {};
+             } catch {
+               uploadData = {};
+             }
+             if (!uploadRes.ok) throw new Error(uploadData?.message || `Image upload failed (${uploadRes.status})`);
              if (uploadData.url) imageUrls = [uploadData.url];
              else if (uploadData.data?.url) imageUrls = [uploadData.data.url];
              else throw new Error("Invalid upload response");

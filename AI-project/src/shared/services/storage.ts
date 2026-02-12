@@ -1,5 +1,22 @@
 import { R2Provider, S3Provider, StorageManager } from '@/extensions/storage';
+import { getRuntimeEnv } from '@/shared/lib/env';
 import { Configs, getAllConfigs } from '@/shared/models/config';
+
+function getEnv(...keys: string[]) {
+  for (const key of keys) {
+    const processValue = process.env[key];
+    if (processValue) {
+      return processValue.trim();
+    }
+
+    const runtimeValue = getRuntimeEnv(key);
+    if (runtimeValue) {
+      return runtimeValue.trim();
+    }
+  }
+
+  return '';
+}
 
 /**
  * get storage service with configs
@@ -8,28 +25,21 @@ export function getStorageServiceWithConfigs(configs: Configs) {
   const storageManager = new StorageManager();
 
   const r2AccessKey =
-    process.env.R2_ACCESS_KEY ||
-    process.env.R2_ACCESS_KEY_ID ||
-    configs.r2_access_key ||
-    '';
+    getEnv('R2_ACCESS_KEY', 'R2_ACCESS_KEY_ID') || configs.r2_access_key || '';
   const r2SecretKey =
-    process.env.R2_SECRET_KEY ||
-    process.env.R2_SECRET_ACCESS_KEY ||
+    getEnv('R2_SECRET_KEY', 'R2_SECRET_ACCESS_KEY') ||
     configs.r2_secret_key ||
     '';
-  const r2BucketName =
-    process.env.R2_BUCKET_NAME || configs.r2_bucket_name || '';
+  const r2BucketName = getEnv('R2_BUCKET_NAME') || configs.r2_bucket_name || '';
   // Keep uploads at bucket root unless explicitly overridden by env.
-  const r2UploadPath = process.env.R2_UPLOAD_PATH || '';
-  const r2AccountId =
-    process.env.R2_ACCOUNT_ID || configs.r2_account_id || '';
+  const r2UploadPath = getEnv('R2_UPLOAD_PATH');
+  const r2AccountId = getEnv('R2_ACCOUNT_ID') || configs.r2_account_id || '';
   const r2Endpoint =
-    process.env.R2_ENDPOINT ||
+    getEnv('R2_ENDPOINT') ||
     configs.r2_endpoint ||
     (r2AccountId ? `https://${r2AccountId}.r2.cloudflarestorage.com` : '');
   const r2PublicDomain =
-    process.env.R2_DOMAIN ||
-    process.env.R2_PUBLIC_DOMAIN ||
+    getEnv('R2_DOMAIN', 'R2_PUBLIC_DOMAIN') ||
     configs.r2_domain ||
     '';
 

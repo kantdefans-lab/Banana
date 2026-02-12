@@ -7,13 +7,31 @@ import * as schema from '@/config/db/schema';
 import { getUuid } from '@/shared/lib/hash';
 import { grantCreditsForNewUser } from '@/shared/models/credit';
 
+function toOrigin(url: string) {
+  if (!url) {
+    return '';
+  }
+
+  try {
+    return new URL(url).origin;
+  } catch {
+    return '';
+  }
+}
+
+function getTrustedOrigins() {
+  return Array.from(
+    new Set([toOrigin(envConfigs.app_url), toOrigin(envConfigs.auth_url)].filter(Boolean))
+  );
+}
+
 // Static auth options - NO database connection
 // This ensures zero database calls during build time
 const authOptions = {
   appName: envConfigs.app_name,
   baseURL: envConfigs.auth_url,
   secret: envConfigs.auth_secret,
-  trustedOrigins: envConfigs.app_url ? [envConfigs.app_url] : [],
+  trustedOrigins: getTrustedOrigins(),
   advanced: {
     database: {
       generateId: () => getUuid(),

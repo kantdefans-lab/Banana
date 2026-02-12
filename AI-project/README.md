@@ -110,3 +110,10 @@ or `BETTER_AUTH_SECRET` (both work).
 
 - `DATABASE_URL`
 - `AUTH_SECRET` (or `BETTER_AUTH_SECRET`)
+- `AUTH_URL` (set to your production domain, e.g. `https://yourdomain.com`)
+- `DB_SINGLETON_ENABLED=false` (recommended on Workers to avoid hung auth requests)
+
+### Deploy safety notes
+
+- `wrangler deploy` can overwrite dashboard vars. Use `--keep-vars` when needed.
+- If `/api/auth/*` times out, set `AUTH_HANDLER_TIMEOUT_MS` (e.g. `12000`) to fail fast and surface backend timeout errors.
