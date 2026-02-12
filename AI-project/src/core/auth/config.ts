@@ -4,6 +4,7 @@ import { oneTap } from 'better-auth/plugins';
 import { db } from '@/core/db';
 import { envConfigs } from '@/config';
 import * as schema from '@/config/db/schema';
+import { getRuntimeEnv } from '@/shared/lib/env';
 import { getUuid } from '@/shared/lib/hash';
 import { grantCreditsForNewUser } from '@/shared/models/credit';
 
@@ -41,9 +42,9 @@ const authOptions = {
     enabled: true,
   },
   logger: {
-    verboseLogging: false,
-    // Disable all logs during build and production
-    disabled: true,
+    verboseLogging: getRuntimeEnv('AUTH_DEBUG') === 'true',
+    // Keep logs off by default in production; enable via AUTH_DEBUG=true.
+    disabled: process.env.NODE_ENV === 'production' && getRuntimeEnv('AUTH_DEBUG') !== 'true',
   },
   rateLimit: {
     window: 10,

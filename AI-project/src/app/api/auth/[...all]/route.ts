@@ -16,6 +16,24 @@ async function logErrorResponse(label: string, response: Response) {
   return response;
 }
 
+function logAuthEnvHints(request: Request) {
+  try {
+    const hasSecret = !!(getRuntimeEnv('AUTH_SECRET') || getRuntimeEnv('BETTER_AUTH_SECRET') || process.env.AUTH_SECRET || process.env.BETTER_AUTH_SECRET);
+    const hasDbUrl = !!(getRuntimeEnv('DATABASE_URL') || process.env.DATABASE_URL);
+    const authUrl = getRuntimeEnv('AUTH_URL') || process.env.AUTH_URL || '';
+    const appUrl = getRuntimeEnv('NEXT_PUBLIC_APP_URL') || process.env.NEXT_PUBLIC_APP_URL || '';
+    console.error('[Auth env]', {
+      path: new URL(request.url).pathname,
+      hasSecret,
+      hasDbUrl,
+      authUrl,
+      appUrl,
+    });
+  } catch {
+    // ignore
+  }
+}
+
 function getErrorMessage(error: unknown) {
   if (error instanceof Error && error.message) {
     return error.message;
@@ -66,6 +84,7 @@ export async function POST(request: Request) {
     const auth = await getAuth();
     const handler = toNextJsHandler(auth.handler);
     const resp = await withTimeout(handler.POST(request), 'Auth POST');
+    if (resp.status >= 500) logAuthEnvHints(request);
     return await logErrorResponse('POST', resp);
   } catch (error: any) {
     console.error('Auth POST error:', error);
@@ -85,6 +104,7 @@ export async function GET(request: Request) {
     const auth = await getAuth();
     const handler = toNextJsHandler(auth.handler);
     const resp = await withTimeout(handler.GET(request), 'Auth GET');
+    if (resp.status >= 500) logAuthEnvHints(request);
     return await logErrorResponse('GET', resp);
   } catch (error: any) {
     console.error('Auth GET error:', error);
