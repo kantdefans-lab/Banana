@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation';
 // 引入认证客户端
 import { signIn, signUp } from '@/core/auth/client'; 
 import { formatAuthErrorMessage } from '@/shared/lib/auth-error';
+import { useAppContext } from '@/shared/contexts/app';
 
 interface LoginModalProps {
   isOpen: boolean;
@@ -26,6 +27,9 @@ export function LoginModal({ isOpen, onClose }: LoginModalProps) {
   });
 
   const router = useRouter();
+  const { configs } = useAppContext();
+  const canUseGoogleAuth =
+    configs.google_auth_enabled === 'true' && !!configs.google_client_id;
 
   // 禁止背景滚动
   useEffect(() => {
@@ -108,6 +112,11 @@ export function LoginModal({ isOpen, onClose }: LoginModalProps) {
   };
 
   const handleGoogleAuth = async () => {
+    if (!canUseGoogleAuth) {
+      alert('Google login is not configured yet. Please use email login.');
+      return;
+    }
+
     if (!agreed) {
       alert('Please read and agree to the User Agreement and Privacy Policy first.');
       return;
@@ -252,14 +261,16 @@ export function LoginModal({ isOpen, onClose }: LoginModalProps) {
               <div className="grow border-t border-gray-200 dark:border-gray-800"></div>
             </div>
 
-            <button 
-              onClick={handleGoogleAuth}
-              disabled={isLoading}
-              className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2 w-full gap-2 border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800"
-            >
-              <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.06364 7.50914C4.70909 4.24092 8.09084 2 12 2C14.6954 2 16.959 2.99095 18.6909 4.60455L15.8227 7.47274C14.7864 6.48185 13.4681 5.97727 12 5.97727C9.39542 5.97727 7.19084 7.73637 6.40455 10.1C6.2045 10.7 6.09086 11.3409 6.09086 12C6.09086 12.6591 6.2045 13.3 6.40455 13.9C7.19084 16.2636 9.39542 18.0227 12 18.0227C13.3454 18.0227 14.4909 17.6682 15.3864 17.0682C16.4454 16.3591 17.15 15.3 17.3818 14.05H12V10.1818H21.4181C21.5364 10.8363 21.6 11.5182 21.6 12.2273C21.6 15.2727 20.5091 17.8363 18.6181 19.5773C16.9636 21.1046 14.7 22 12 22C8.09084 22 4.70909 19.7591 3.06364 16.4909C2.38638 15.1409 2 13.6136 2 12C2 10.3864 2.38638 8.85911 3.06364 7.50914Z"></path></svg>
-              <span>Sign in with Google</span>
-            </button>
+            {canUseGoogleAuth && (
+              <button 
+                onClick={handleGoogleAuth}
+                disabled={isLoading}
+                className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2 w-full gap-2 border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800"
+              >
+                <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3.06364 7.50914C4.70909 4.24092 8.09084 2 12 2C14.6954 2 16.959 2.99095 18.6909 4.60455L15.8227 7.47274C14.7864 6.48185 13.4681 5.97727 12 5.97727C9.39542 5.97727 7.19084 7.73637 6.40455 10.1C6.2045 10.7 6.09086 11.3409 6.09086 12C6.09086 12.6591 6.2045 13.3 6.40455 13.9C7.19084 16.2636 9.39542 18.0227 12 18.0227C13.3454 18.0227 14.4909 17.6682 15.3864 17.0682C16.4454 16.3591 17.15 15.3 17.3818 14.05H12V10.1818H21.4181C21.5364 10.8363 21.6 11.5182 21.6 12.2273C21.6 15.2727 20.5091 17.8363 18.6181 19.5773C16.9636 21.1046 14.7 22 12 22C8.09084 22 4.70909 19.7591 3.06364 16.4909C2.38638 15.1409 2 13.6136 2 12C2 10.3864 2.38638 8.85911 3.06364 7.50914Z"></path></svg>
+                <span>Sign in with Google</span>
+              </button>
+            )}
           </div>
         </div>
 

@@ -65,7 +65,10 @@ export function SocialProviders({
 
   const providers: ButtonType[] = [];
 
-  if (configs.google_auth_enabled === 'true') {
+  if (
+    configs.google_auth_enabled === 'true' &&
+    !!configs.google_client_id
+  ) {
     providers.push({
       name: 'google',
       title: t('google_sign_in_title'),
@@ -74,7 +77,10 @@ export function SocialProviders({
     });
   }
 
-  if (configs.github_auth_enabled === 'true') {
+  if (
+    configs.github_auth_enabled === 'true' &&
+    !!configs.github_client_id
+  ) {
     providers.push({
       name: 'github',
       title: t('github_sign_in_title'),

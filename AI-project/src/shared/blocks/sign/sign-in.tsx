@@ -37,8 +37,10 @@ export function SignIn({
   const [loading, setLoading] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
 
-  const isGoogleAuthEnabled = configs.google_auth_enabled === 'true';
-  const isGithubAuthEnabled = configs.github_auth_enabled === 'true';
+  const isGoogleAuthEnabled =
+    configs.google_auth_enabled === 'true' && !!configs.google_client_id;
+  const isGithubAuthEnabled =
+    configs.github_auth_enabled === 'true' && !!configs.github_client_id;
   const isEmailAuthEnabled =
     configs.email_auth_enabled !== 'false' ||
     (!isGoogleAuthEnabled && !isGithubAuthEnabled); // no social providers enabled, auto enable email auth
