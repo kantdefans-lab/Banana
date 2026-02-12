@@ -27,6 +27,14 @@ const authOptions = {
     // Disable all logs during build and production
     disabled: true,
   },
+  rateLimit: {
+    window: 10,
+    max: 100,
+    customRules: {
+      '/sign-in/*': { window: 60, max: 20 },
+      '/sign-up/*': { window: 60, max: 10 },
+    },
+  },
 };
 
 // get auth options with configs
