@@ -19,6 +19,7 @@ import {
 } from '@/shared/components/ui/card';
 import { Input } from '@/shared/components/ui/input';
 import { Label } from '@/shared/components/ui/label';
+import { formatAuthErrorMessage } from '@/shared/lib/auth-error';
 
 import { SocialProviders } from './social-providers';
 
@@ -78,7 +79,7 @@ export function SignIn({
         },
         onSuccess: (ctx) => {},
         onError: (e: any) => {
-          toast.error(e?.error?.message || 'sign in failed');
+          toast.error(formatAuthErrorMessage(e, 'sign in failed'));
           setLoading(false);
         },
       }

@@ -111,9 +111,34 @@ or `BETTER_AUTH_SECRET` (both work).
 - `DATABASE_URL`
 - `AUTH_SECRET` (or `BETTER_AUTH_SECRET`)
 - `AUTH_URL` (set to your production domain, e.g. `https://yourdomain.com`)
+- `ALLOW_DIRECT_DB_IN_WORKERS=true` (required when not using Hyperdrive)
 - `DB_SINGLETON_ENABLED=false` (recommended on Workers to avoid hung auth requests)
+- `DB_MAX_CONNECTIONS=1` (recommended baseline for Worker direct DB mode)
+- `AUTH_HANDLER_TIMEOUT_MS=12000` (recommended to fail fast and surface backend timeout errors)
+
+For Cloudflare Git one-click deploy, ensure the variables are set in both:
+- `Production` environment
+- `Preview` environment
+
+If `AUTH_SECRET` is configured as a secret, do not duplicate it as plaintext var.
+
+### Cloudflare Git deploy auth verification checklist
+
+After each deployment, verify in this order:
+1. Open `/sign-up` and create a test account with email/password.
+2. Sign out, then sign in again with the same account.
+3. Confirm no UI fallback like `Unknown error`; backend errors should include actionable text.
+4. In Cloudflare logs, ensure `/api/auth/sign-up/email` and `/api/auth/sign-in/email` are 200 or expected 4xx.
+5. If a 5xx occurs, search logs by `x-auth-error-id` (or `errorId`) and check related auth env hints.
+
+### Auth rollback path (Direct DATABASE_URL mode)
+
+If login/register is still unstable in direct mode:
+1. Configure Hyperdrive binding (`HYPERDRIVE`) for the Worker.
+2. Remove or set `ALLOW_DIRECT_DB_IN_WORKERS=false`.
+3. Redeploy and re-run the verification checklist.
 
 ### Deploy safety notes
 
 - `wrangler deploy` can overwrite dashboard vars. Use `--keep-vars` when needed.
-- If `/api/auth/*` times out, set `AUTH_HANDLER_TIMEOUT_MS` (e.g. `12000`) to fail fast and surface backend timeout errors.
+- If `/api/auth/*` times out, keep `AUTH_HANDLER_TIMEOUT_MS` configured so timeout errors are explicit.

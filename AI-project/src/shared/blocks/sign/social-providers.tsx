@@ -9,6 +9,7 @@ import { useRouter } from '@/core/i18n/navigation';
 import { defaultLocale } from '@/config/locale';
 import { Button } from '@/shared/components/ui/button';
 import { useAppContext } from '@/shared/contexts/app';
+import { formatAuthErrorMessage } from '@/shared/lib/auth-error';
 import { cn } from '@/shared/lib/utils';
 import { Button as ButtonType } from '@/shared/types/blocks/common';
 
@@ -55,7 +56,7 @@ export function SocialProviders({
         },
         onSuccess: (ctx) => {},
         onError: (e: any) => {
-          toast.error(e?.error?.message || 'sign in failed');
+          toast.error(formatAuthErrorMessage(e, 'sign in failed'));
           setLoading(false);
         },
       }

@@ -12,6 +12,7 @@ import { Button } from '@/shared/components/ui/button';
 import { Input } from '@/shared/components/ui/input';
 import { Label } from '@/shared/components/ui/label';
 import { useAppContext } from '@/shared/contexts/app';
+import { formatAuthErrorMessage } from '@/shared/lib/auth-error';
 
 import { SocialProviders } from './social-providers';
 
@@ -74,13 +75,13 @@ export function SignInForm({
           },
           onSuccess: (ctx) => {},
           onError: (e: any) => {
-            toast.error(e?.error?.message || 'sign in failed');
+            toast.error(formatAuthErrorMessage(e, 'sign in failed'));
             setLoading(false);
           },
         }
       );
     } catch (e: any) {
-      toast.error(e.message || 'sign in failed');
+      toast.error(formatAuthErrorMessage(e, 'sign in failed'));
     } finally {
       setLoading(false);
     }

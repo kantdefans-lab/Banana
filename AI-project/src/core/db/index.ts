@@ -58,8 +58,8 @@ export function db() {
       // Direct TCP connections to Postgres are unreliable/not supported in Workers without Hyperdrive.
       // Fail fast with a clear message so deploys don't silently 500 on auth/session queries.
       throw new Error(
-        'Cloudflare Workers requires a Hyperdrive binding (HYPERDRIVE) for Postgres access. ' +
-          'Create a Hyperdrive instance and bind it to this Worker, or set ALLOW_DIRECT_DB_IN_WORKERS=true (not recommended for production).'
+        'Cloudflare Workers is running without a HYPERDRIVE binding and direct database access is disabled. ' +
+          'Set ALLOW_DIRECT_DB_IN_WORKERS=true to use DATABASE_URL directly, or bind HYPERDRIVE for the recommended path.'
       );
     }
   }
@@ -67,7 +67,8 @@ export function db() {
   if (!databaseUrl) {
     if (isCloudflareWorker) {
       throw new Error(
-        'DATABASE_URL is not set. In Cloudflare Workers you should configure a Hyperdrive binding (HYPERDRIVE) for Postgres access.'
+        'DATABASE_URL is not set in Cloudflare Workers runtime. ' +
+          'Add DATABASE_URL to runtime variables for direct mode, or configure a HYPERDRIVE binding.'
       );
     }
 
