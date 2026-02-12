@@ -1,7 +1,9 @@
 import { NextResponse } from 'next/server';
 import { toNextJsHandler } from 'better-auth/next-js';
 
+import { sql } from 'drizzle-orm';
 import { getRuntimeEnv } from '@/shared/lib/env';
+import { db } from '@/core/db';
 import { getAuth } from '@/core/auth';
 
 async function logErrorResponse(label: string, response: Response) {
@@ -31,6 +33,33 @@ function logAuthEnvHints(request: Request) {
     });
   } catch {
     // ignore
+  }
+}
+
+async function logDbDiagnostics() {
+  // Only run when explicitly enabled (can be noisy and may add latency).
+  if (getRuntimeEnv('AUTH_DEBUG') !== 'true') {
+    return;
+  }
+
+  try {
+    const result = await Promise.race([
+      (async () => {
+        const ping = await db().execute(sql`select 1 as ok`);
+        const regSession = await db().execute(
+          sql`select to_regclass('public.session') as public_session, to_regclass('session') as session`
+        );
+        const searchPath = await db().execute(sql`show search_path`);
+        return { ping, regSession, searchPath };
+      })(),
+      new Promise((_, reject) =>
+        setTimeout(() => reject(new Error('db diagnostics timeout')), 2500)
+      ),
+    ]);
+
+    console.error('[Auth db]', result);
+  } catch (e: any) {
+    console.error('[Auth db] failed:', e?.message || e);
   }
 }
 
@@ -84,7 +113,10 @@ export async function POST(request: Request) {
     const auth = await getAuth();
     const handler = toNextJsHandler(auth.handler);
     const resp = await withTimeout(handler.POST(request), 'Auth POST');
-    if (resp.status >= 500) logAuthEnvHints(request);
+    if (resp.status >= 500) {
+      logAuthEnvHints(request);
+      await logDbDiagnostics();
+    }
     return await logErrorResponse('POST', resp);
   } catch (error: any) {
     console.error('Auth POST error:', error);
@@ -104,7 +136,10 @@ export async function GET(request: Request) {
     const auth = await getAuth();
     const handler = toNextJsHandler(auth.handler);
     const resp = await withTimeout(handler.GET(request), 'Auth GET');
-    if (resp.status >= 500) logAuthEnvHints(request);
+    if (resp.status >= 500) {
+      logAuthEnvHints(request);
+      await logDbDiagnostics();
+    }
     return await logErrorResponse('GET', resp);
   } catch (error: any) {
     console.error('Auth GET error:', error);
