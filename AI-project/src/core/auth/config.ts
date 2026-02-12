@@ -59,6 +59,10 @@ const authOptions = {
 
 // get auth options with configs
 export async function getAuthOptions(configs: Record<string, string>) {
+  const isGoogleOnly =
+    envConfigs.auth_google_only === 'true' ||
+    configs.auth_google_only === 'true';
+
   return {
     ...authOptions,
     // Add database connection only when actually needed (runtime)
@@ -87,9 +91,9 @@ export async function getAuthOptions(configs: Record<string, string>) {
       },
     },
     emailAndPassword: {
-      enabled: configs.email_auth_enabled !== 'false',
+      enabled: !isGoogleOnly && configs.email_auth_enabled !== 'false',
     },
-    socialProviders: await getSocialProviders(configs),
+    socialProviders: await getSocialProviders(configs, isGoogleOnly),
     plugins:
       configs.google_client_id && configs.google_one_tap_enabled === 'true'
         ? [oneTap()]
@@ -98,11 +102,17 @@ export async function getAuthOptions(configs: Record<string, string>) {
 }
 
 // get social providers with configs
-export async function getSocialProviders(configs: Record<string, string>) {
+export async function getSocialProviders(
+  configs: Record<string, string>,
+  isGoogleOnly = false
+) {
   const providers: any = {};
 
+  const googleEnabled =
+    isGoogleOnly || configs.google_auth_enabled === 'true';
+
   // google auth
-  if (configs.google_client_id && configs.google_client_secret) {
+  if (googleEnabled && configs.google_client_id && configs.google_client_secret) {
     providers.google = {
       clientId: configs.google_client_id,
       clientSecret: configs.google_client_secret,
@@ -110,7 +120,12 @@ export async function getSocialProviders(configs: Record<string, string>) {
   }
 
   // github auth
-  if (configs.github_client_id && configs.github_client_secret) {
+  if (
+    !isGoogleOnly &&
+    configs.github_auth_enabled === 'true' &&
+    configs.github_client_id &&
+    configs.github_client_secret
+  ) {
     providers.github = {
       clientId: configs.github_client_id,
       clientSecret: configs.github_client_secret,

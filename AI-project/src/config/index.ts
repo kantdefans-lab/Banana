@@ -77,6 +77,7 @@ export const envConfigs = {
   database_provider: getEnvValue('DATABASE_PROVIDER') || 'postgresql',
   db_singleton_enabled: getEnvValue('DB_SINGLETON_ENABLED') || 'false',
   db_max_connections: getEnvValue('DB_MAX_CONNECTIONS') || '1',
+  auth_google_only: getEnvValue('AUTH_GOOGLE_ONLY') || 'false',
   auth_url: authUrl,
   // better-auth error messages mention BETTER_AUTH_SECRET; accept both.
   auth_secret: getEnvValue('BETTER_AUTH_SECRET', 'AUTH_SECRET'), // openssl rand -base64 32

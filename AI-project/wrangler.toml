@@ -25,6 +25,8 @@ NEXT_PUBLIC_APP_NAME = "luminglobal.ai"
 
 # better-auth base URL (recommended to match your production origin)
 AUTH_URL = "https://luminglobal.ai"
+# Google-only auth mode (disable email/password and GitHub auth)
+AUTH_GOOGLE_ONLY = "true"
 
 # theme
 NEXT_PUBLIC_THEME = "default"

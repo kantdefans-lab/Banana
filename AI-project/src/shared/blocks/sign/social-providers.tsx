@@ -64,11 +64,12 @@ export function SocialProviders({
   };
 
   const providers: ButtonType[] = [];
+  const isGoogleOnly = configs.auth_google_only === 'true';
+  const googleAuthReady =
+    configs.google_auth_ready === 'true' ||
+    (configs.google_auth_enabled === 'true' && !!configs.google_client_id);
 
-  if (
-    configs.google_auth_enabled === 'true' &&
-    !!configs.google_client_id
-  ) {
+  if (googleAuthReady) {
     providers.push({
       name: 'google',
       title: t('google_sign_in_title'),
@@ -78,6 +79,7 @@ export function SocialProviders({
   }
 
   if (
+    !isGoogleOnly &&
     configs.github_auth_enabled === 'true' &&
     !!configs.github_client_id
   ) {
@@ -87,6 +89,16 @@ export function SocialProviders({
       icon: <RiGithubFill />,
       onClick: () => handleSignIn({ provider: 'github' }),
     });
+  }
+
+  if (providers.length === 0) {
+    return (
+      <div className="text-center text-xs text-red-500">
+        {isGoogleOnly
+          ? 'Google login is not configured yet.'
+          : 'No social login provider is available.'}
+      </div>
+    );
   }
 
   return (

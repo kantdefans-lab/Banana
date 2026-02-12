@@ -37,13 +37,18 @@ export function SignIn({
   const [loading, setLoading] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
 
+  const isGoogleOnly = configs.auth_google_only === 'true';
   const isGoogleAuthEnabled =
-    configs.google_auth_enabled === 'true' && !!configs.google_client_id;
+    configs.google_auth_ready === 'true' ||
+    (configs.google_auth_enabled === 'true' && !!configs.google_client_id);
   const isGithubAuthEnabled =
-    configs.github_auth_enabled === 'true' && !!configs.github_client_id;
+    !isGoogleOnly &&
+    configs.github_auth_enabled === 'true' &&
+    !!configs.github_client_id;
   const isEmailAuthEnabled =
-    configs.email_auth_enabled !== 'false' ||
-    (!isGoogleAuthEnabled && !isGithubAuthEnabled); // no social providers enabled, auto enable email auth
+    !isGoogleOnly &&
+    (configs.email_auth_enabled !== 'false' ||
+      (!isGoogleAuthEnabled && !isGithubAuthEnabled)); // no social providers enabled, auto enable email auth
 
   if (callbackUrl) {
     const locale = useLocale();

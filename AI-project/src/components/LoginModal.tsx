@@ -28,8 +28,10 @@ export function LoginModal({ isOpen, onClose }: LoginModalProps) {
 
   const router = useRouter();
   const { configs } = useAppContext();
+  const isGoogleOnly = configs.auth_google_only === 'true';
   const canUseGoogleAuth =
-    configs.google_auth_enabled === 'true' && !!configs.google_client_id;
+    configs.google_auth_ready === 'true' ||
+    (configs.google_auth_enabled === 'true' && !!configs.google_client_id);
 
   // 禁止背景滚动
   useEffect(() => {
@@ -52,6 +54,11 @@ export function LoginModal({ isOpen, onClose }: LoginModalProps) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (isGoogleOnly) {
+      alert('This site currently supports Google sign-in only.');
+      return;
+    }
     
     // 1. 协议校验
     if (!agreed) {
@@ -162,17 +169,20 @@ export function LoginModal({ isOpen, onClose }: LoginModalProps) {
 
         <div className="flex flex-col gap-2 text-center sm:text-left">
           <h2 className="text-lg leading-none font-semibold">
-            {mode === 'signin' ? 'Sign In' : 'Sign Up'}
+            {isGoogleOnly ? 'Google Sign In' : mode === 'signin' ? 'Sign In' : 'Sign Up'}
           </h2>
           <p className="text-muted-foreground text-sm text-gray-500">
-            {mode === 'signin' ? 'Sign in to your account' : 'Create an account to get started'}
+            {isGoogleOnly
+              ? 'Sign in with your Google account'
+              : mode === 'signin'
+                ? 'Sign in to your account'
+                : 'Create an account to get started'}
           </p>
         </div>
 
         <div className="w-full md:max-w-md">
           <form className="grid gap-4" onSubmit={handleSubmit}>
-            
-            {mode === 'signup' && (
+            {!isGoogleOnly && mode === 'signup' && (
               <div className="grid gap-2">
                 <label className="flex items-center gap-2 text-sm leading-none font-medium select-none" htmlFor="name">Name</label>
                 <div className="relative">
@@ -190,38 +200,42 @@ export function LoginModal({ isOpen, onClose }: LoginModalProps) {
               </div>
             )}
 
-            <div className="grid gap-2">
-              <label className="flex items-center gap-2 text-sm leading-none font-medium select-none" htmlFor="email">Email</label>
-              <div className="relative">
-                <Mail className="absolute left-3 top-2.5 h-4 w-4 text-gray-400" />
-                <input 
-                  className="flex h-9 w-full rounded-md border border-gray-200 bg-transparent pl-9 pr-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-blue-600 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-700" 
-                  id="email" 
-                  placeholder="name@example.com" 
-                  required 
-                  type="email" 
-                  value={formData.email}
-                  onChange={handleInputChange}
-                />
+            {!isGoogleOnly && (
+              <div className="grid gap-2">
+                <label className="flex items-center gap-2 text-sm leading-none font-medium select-none" htmlFor="email">Email</label>
+                <div className="relative">
+                  <Mail className="absolute left-3 top-2.5 h-4 w-4 text-gray-400" />
+                  <input 
+                    className="flex h-9 w-full rounded-md border border-gray-200 bg-transparent pl-9 pr-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-blue-600 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-700" 
+                    id="email" 
+                    placeholder="name@example.com" 
+                    required 
+                    type="email" 
+                    value={formData.email}
+                    onChange={handleInputChange}
+                  />
+                </div>
               </div>
-            </div>
+            )}
 
-            <div className="grid gap-2">
-              <label className="flex items-center gap-2 text-sm leading-none font-medium select-none" htmlFor="password">Password</label>
-              <div className="relative">
-                <Lock className="absolute left-3 top-2.5 h-4 w-4 text-gray-400" />
-                <input 
-                  className="flex h-9 w-full rounded-md border border-gray-200 bg-transparent pl-9 pr-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-blue-600 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-700" 
-                  id="password" 
-                  placeholder="******" 
-                  autoComplete={mode === 'signin' ? "current-password" : "new-password"} 
-                  required 
-                  type="password" 
-                  value={formData.password}
-                  onChange={handleInputChange}
-                />
+            {!isGoogleOnly && (
+              <div className="grid gap-2">
+                <label className="flex items-center gap-2 text-sm leading-none font-medium select-none" htmlFor="password">Password</label>
+                <div className="relative">
+                  <Lock className="absolute left-3 top-2.5 h-4 w-4 text-gray-400" />
+                  <input 
+                    className="flex h-9 w-full rounded-md border border-gray-200 bg-transparent pl-9 pr-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-blue-600 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-700" 
+                    id="password" 
+                    placeholder="******" 
+                    autoComplete={mode === 'signin' ? "current-password" : "new-password"} 
+                    required 
+                    type="password" 
+                    value={formData.password}
+                    onChange={handleInputChange}
+                  />
+                </div>
               </div>
-            </div>
+            )}
 
             {/* 协议勾选框 */}
             <div className="flex items-start space-x-2 py-1">
@@ -242,22 +256,26 @@ export function LoginModal({ isOpen, onClose }: LoginModalProps) {
               </label>
             </div>
 
-            <button 
-              className={`inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all h-9 px-4 py-2 w-full text-white shadow-sm ${agreed && !isLoading ? 'bg-blue-600 hover:bg-blue-700' : 'bg-gray-400 cursor-not-allowed'}`}
-              type="submit"
-              disabled={!agreed || isLoading}
-            >
-              {isLoading && <Loader2 className="animate-spin h-4 w-4" />}
-              <span>
-                {isLoading ? 'Processing...' : (mode === 'signin' ? 'Sign In' : 'Sign Up')}
-              </span>
-            </button>
+            {!isGoogleOnly && (
+              <button 
+                className={`inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all h-9 px-4 py-2 w-full text-white shadow-sm ${agreed && !isLoading ? 'bg-blue-600 hover:bg-blue-700' : 'bg-gray-400 cursor-not-allowed'}`}
+                type="submit"
+                disabled={!agreed || isLoading}
+              >
+                {isLoading && <Loader2 className="animate-spin h-4 w-4" />}
+                <span>
+                  {isLoading ? 'Processing...' : (mode === 'signin' ? 'Sign In' : 'Sign Up')}
+                </span>
+              </button>
+            )}
           </form>
 
           <div className="flex w-full items-center gap-2 flex-col justify-between mt-4">
             <div className="relative w-full flex items-center py-2">
               <div className="grow border-t border-gray-200 dark:border-gray-800"></div>
-              <span className="shrink-0 px-2 text-xs text-gray-400 uppercase">Or continue with</span>
+              <span className="shrink-0 px-2 text-xs text-gray-400 uppercase">
+                {isGoogleOnly ? 'Continue with Google' : 'Or continue with'}
+              </span>
               <div className="grow border-t border-gray-200 dark:border-gray-800"></div>
             </div>
 
@@ -271,9 +289,16 @@ export function LoginModal({ isOpen, onClose }: LoginModalProps) {
                 <span>Sign in with Google</span>
               </button>
             )}
+
+            {!canUseGoogleAuth && (
+              <p className="text-center text-xs text-red-500">
+                Google login is not configured yet. Please set Google Client ID/Secret in admin settings.
+              </p>
+            )}
           </div>
         </div>
 
+        {!isGoogleOnly && (
         <div className="flex w-full justify-center border-t border-gray-100 dark:border-gray-800 py-4 mt-2">
           {mode === 'signin' ? (
             <p className="text-center text-xs text-neutral-500">
@@ -297,6 +322,7 @@ export function LoginModal({ isOpen, onClose }: LoginModalProps) {
             </p>
           )}
         </div>
+        )}
       </div>
     </div>
   );

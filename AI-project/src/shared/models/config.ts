@@ -156,5 +156,15 @@ export async function getPublicConfigs(): Promise<Configs> {
     ...publicConfigs,
   };
 
+  // Computed public auth flags (no secret exposure)
+  const isGoogleOnly = String(allConfigs.auth_google_only) === 'true';
+  const googleAuthReady =
+    (isGoogleOnly || String(allConfigs.google_auth_enabled) === 'true') &&
+    !!allConfigs.google_client_id &&
+    !!allConfigs.google_client_secret;
+
+  configs.auth_google_only = isGoogleOnly ? 'true' : 'false';
+  configs.google_auth_ready = googleAuthReady ? 'true' : 'false';
+
   return configs;
 }
