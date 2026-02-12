@@ -2,7 +2,7 @@ import { drizzle } from 'drizzle-orm/postgres-js';
 import postgres from 'postgres';
 
 import { envConfigs } from '@/config';
-import { isCloudflareWorker } from '@/shared/lib/env';
+import { getRuntimeEnv, isCloudflareWorker } from '@/shared/lib/env';
 
 // Global database connection instance (singleton pattern)
 let dbInstance: ReturnType<typeof drizzle> | null = null;
@@ -38,21 +38,39 @@ export function db() {
   let databaseUrl = envConfigs.database_url;
 
   let isHyperdrive = false;
+  let allowDirectDbInWorkers = false;
 
   if (isCloudflareWorker) {
+    // OpenNext exposes bindings on Cloudflare context: globalThis[Symbol.for("__cloudflare-context__")].env
+    const symbol = Symbol.for('__cloudflare-context__');
+    const ctx: any = (globalThis as any)?.[symbol];
     const env: any =
-      (typeof globalThis !== 'undefined' && (globalThis as any).env) || {};
+      ctx?.env || ((typeof globalThis !== 'undefined' && (globalThis as any).env) || {});
     // Detect if set Hyperdrive
     isHyperdrive = 'HYPERDRIVE' in env;
+    allowDirectDbInWorkers = getRuntimeEnv('ALLOW_DIRECT_DB_IN_WORKERS') === 'true';
 
     if (isHyperdrive) {
       const hyperdrive = env.HYPERDRIVE;
       databaseUrl = hyperdrive.connectionString;
       console.log('using Hyperdrive connection');
+    } else if (!allowDirectDbInWorkers) {
+      // Direct TCP connections to Postgres are unreliable/not supported in Workers without Hyperdrive.
+      // Fail fast with a clear message so deploys don't silently 500 on auth/session queries.
+      throw new Error(
+        'Cloudflare Workers requires a Hyperdrive binding (HYPERDRIVE) for Postgres access. ' +
+          'Create a Hyperdrive instance and bind it to this Worker, or set ALLOW_DIRECT_DB_IN_WORKERS=true (not recommended for production).'
+      );
     }
   }
 
   if (!databaseUrl) {
+    if (isCloudflareWorker) {
+      throw new Error(
+        'DATABASE_URL is not set. In Cloudflare Workers you should configure a Hyperdrive binding (HYPERDRIVE) for Postgres access.'
+      );
+    }
+
     throw new Error('DATABASE_URL is not set');
   }
 
