@@ -20,8 +20,11 @@ enabled = true
 
 [vars]
 # app
-NEXT_PUBLIC_APP_URL = "http://localhost:3000"
-NEXT_PUBLIC_APP_NAME = "Your App Name"
+NEXT_PUBLIC_APP_URL = "https://luminglobal.ai"
+NEXT_PUBLIC_APP_NAME = "luminglobal.ai"
+
+# better-auth base URL (recommended to match your production origin)
+AUTH_URL = "https://luminglobal.ai"
 
 # theme
 NEXT_PUBLIC_THEME = "default"
