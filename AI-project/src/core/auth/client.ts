@@ -3,41 +3,9 @@ import { createAuthClient } from 'better-auth/react';
 
 import { envConfigs } from '@/config';
 
-function resolveClientAuthBaseUrl() {
-  const configuredUrl = envConfigs.auth_url?.trim();
-  if (!configuredUrl) {
-    return '';
-  }
-
-  if (typeof window !== 'undefined') {
-    try {
-      const configuredHost = new URL(configuredUrl).hostname;
-      const currentHost = window.location.hostname;
-      const configuredIsLocalhost =
-        configuredHost === 'localhost' ||
-        configuredHost === '127.0.0.1' ||
-        configuredHost === '::1' ||
-        configuredHost === '[::1]';
-      const currentIsLocalhost =
-        currentHost === 'localhost' ||
-        currentHost === '127.0.0.1' ||
-        currentHost === '::1' ||
-        currentHost === '[::1]';
-
-      if (!currentIsLocalhost && configuredIsLocalhost) {
-        return '';
-      }
-    } catch {
-      return '';
-    }
-  }
-
-  return configuredUrl;
-}
-
 // create default auth client, without plugins
 export const authClient = createAuthClient({
-  baseURL: resolveClientAuthBaseUrl(),
+  baseURL: envConfigs.auth_url,
 });
 
 // export default auth client methods
@@ -46,7 +14,7 @@ export const { useSession, signIn, signUp, signOut } = authClient;
 // get auth client with plugins
 export function getAuthClient(configs: Record<string, string>) {
   const authClient = createAuthClient({
-    baseURL: resolveClientAuthBaseUrl(),
+    baseURL: envConfigs.auth_url,
     plugins: getAuthPlugins(configs),
   });
 

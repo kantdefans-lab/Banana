@@ -20,11 +20,8 @@ enabled = true
 
 [vars]
 # app
-NEXT_PUBLIC_APP_URL = "https://luminglobal.ai"
-NEXT_PUBLIC_APP_NAME = "luminglobal.ai"
-
-# better-auth base URL (recommended to match your production origin)
-AUTH_URL = "https://luminglobal.ai"
+NEXT_PUBLIC_APP_URL = "http://localhost:3000"
+NEXT_PUBLIC_APP_NAME = "Your App Name"
 
 # theme
 NEXT_PUBLIC_THEME = "default"
@@ -34,12 +31,8 @@ NEXT_PUBLIC_APPEARANCE = "system"
 
 # database
 DATABASE_PROVIDER = "postgresql"
-# Allow direct Postgres connection in Workers when Hyperdrive is not bound.
-ALLOW_DIRECT_DB_IN_WORKERS = "true"
-# Keep disabled on Workers to avoid hung requests from cross-request DB client reuse.
-DB_SINGLETON_ENABLED = "false"
+DB_SINGLETON_ENABLED = "true"
 DB_MAX_CONNECTIONS = "1"
-AUTH_HANDLER_TIMEOUT_MS = "12000"
 
 # auth secret
 # openssl rand -base64 32

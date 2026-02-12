@@ -619,18 +619,8 @@ const AIImageGenerator = ({
       const formData = new FormData();
       formData.append('file', file);
       const response = await fetch('/api/upload', { method: 'POST', body: formData });
-      const rawText = await response.text();
-      let data: any = {};
-      try {
-        data = rawText ? JSON.parse(rawText) : {};
-      } catch {
-        data = {};
-      }
-
-      if (!response.ok) {
-        throw new Error(data?.message || `Upload failed (${response.status})`);
-      }
-
+      if (!response.ok) throw new Error("Upload failed");
+      const data = await response.json();
       return data.url; 
     });
     return Promise.all(uploadPromises);
@@ -762,10 +752,7 @@ const AIImageGenerator = ({
       try {
         setIsLoading(true);
         filesUrls = await uploadImages(selectedImages);
-      } catch (e: any) {
-        setIsLoading(false);
-        return setErrorMsg(e?.message || 'Upload failed');
-      }
+      } catch (e: any) { setIsLoading(false); return setErrorMsg(`Upload failed: ${e.message}`); }
     }
 
     setIsLoading(true);

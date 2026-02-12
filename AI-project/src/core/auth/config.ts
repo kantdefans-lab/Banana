@@ -4,27 +4,8 @@ import { oneTap } from 'better-auth/plugins';
 import { db } from '@/core/db';
 import { envConfigs } from '@/config';
 import * as schema from '@/config/db/schema';
-import { getRuntimeEnv } from '@/shared/lib/env';
 import { getUuid } from '@/shared/lib/hash';
 import { grantCreditsForNewUser } from '@/shared/models/credit';
-
-function toOrigin(url: string) {
-  if (!url) {
-    return '';
-  }
-
-  try {
-    return new URL(url).origin;
-  } catch {
-    return '';
-  }
-}
-
-function getTrustedOrigins() {
-  return Array.from(
-    new Set([toOrigin(envConfigs.app_url), toOrigin(envConfigs.auth_url)].filter(Boolean))
-  );
-}
 
 // Static auth options - NO database connection
 // This ensures zero database calls during build time
@@ -32,7 +13,7 @@ const authOptions = {
   appName: envConfigs.app_name,
   baseURL: envConfigs.auth_url,
   secret: envConfigs.auth_secret,
-  trustedOrigins: getTrustedOrigins(),
+  trustedOrigins: envConfigs.app_url ? [envConfigs.app_url] : [],
   advanced: {
     database: {
       generateId: () => getUuid(),
@@ -42,9 +23,9 @@ const authOptions = {
     enabled: true,
   },
   logger: {
-    verboseLogging: getRuntimeEnv('AUTH_DEBUG') === 'true',
-    // Keep logs off by default in production; enable via AUTH_DEBUG=true.
-    disabled: process.env.NODE_ENV === 'production' && getRuntimeEnv('AUTH_DEBUG') !== 'true',
+    verboseLogging: false,
+    // Disable all logs during build and production
+    disabled: true,
   },
   rateLimit: {
     window: 10,

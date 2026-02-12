@@ -20,9 +20,6 @@ enabled = true
 NEXT_PUBLIC_APP_URL = "http://localhost:3000"
 NEXT_PUBLIC_APP_NAME = "Your App Name"
 
-# better-auth base URL (set to your production origin in Cloudflare dashboard)
-AUTH_URL = "http://localhost:3000"
-
 # theme
 NEXT_PUBLIC_THEME = "default"
 
@@ -32,12 +29,8 @@ NEXT_PUBLIC_APPEARANCE = "system"
 # database
 DATABASE_URL = ""
 DATABASE_PROVIDER = "postgresql"
-# Allow direct Postgres connection in Workers when Hyperdrive is not bound.
-ALLOW_DIRECT_DB_IN_WORKERS = "true"
-# Keep disabled on Workers to avoid hung requests from cross-request DB client reuse.
-DB_SINGLETON_ENABLED = "false"
+DB_SINGLETON_ENABLED = "true"
 DB_MAX_CONNECTIONS = "1"
-AUTH_HANDLER_TIMEOUT_MS = "12000"
 
 # auth secret
 # openssl rand -base64 32

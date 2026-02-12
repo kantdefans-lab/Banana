@@ -7,7 +7,6 @@ import { useRouter } from 'next/navigation';
 
 // 引入认证客户端
 import { signIn, signUp } from '@/core/auth/client'; 
-import { formatAuthErrorMessage } from '@/shared/lib/auth-error';
 
 interface LoginModalProps {
   isOpen: boolean;
@@ -74,7 +73,7 @@ export function LoginModal({ isOpen, onClose }: LoginModalProps) {
 
         // 检查返回结果中是否有 error
         if (res?.error) {
-          alert('Login failed: ' + formatAuthErrorMessage(res.error));
+          alert('Login failed: ' + (res.error.message || 'Unknown error'));
         } else {
           // 登录成功
           onClose();
@@ -92,7 +91,7 @@ export function LoginModal({ isOpen, onClose }: LoginModalProps) {
         });
 
         if (res?.error) {
-          alert('Registration failed: ' + formatAuthErrorMessage(res.error));
+          alert('Registration failed: ' + (res.error.message || 'Unknown error'));
         } else {
           alert('Account created successfully! Please log in.');
           setMode('signin');
@@ -101,7 +100,7 @@ export function LoginModal({ isOpen, onClose }: LoginModalProps) {
 
     } catch (error: any) {
       console.error('Auth error:', error);
-      alert(formatAuthErrorMessage(error, 'An error occurred. Please try again.'));
+      alert(error.message || 'An error occurred. Please try again.');
     } finally {
       setIsLoading(false);
     }
@@ -123,9 +122,9 @@ export function LoginModal({ isOpen, onClose }: LoginModalProps) {
         provider: 'google',
         callbackURL: window.location.href // 登录后跳回当前页面
       });
-    } catch (error: unknown) {
+    } catch (error) {
       console.error("Google Auth Error:", error);
-      alert(formatAuthErrorMessage(error, 'Failed to initiate Google login.'));
+      alert("Failed to initiate Google login.");
       setIsLoading(false);
     }
     // 注意：如果是跳转式登录，setIsLoading(false) 可能不会执行，这是正常的

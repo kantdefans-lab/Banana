@@ -20,7 +20,6 @@ import {
 } from '@/shared/components/ui/card';
 import { Input } from '@/shared/components/ui/input';
 import { Label } from '@/shared/components/ui/label';
-import { formatAuthErrorMessage } from '@/shared/lib/auth-error';
 
 import { SocialProviders } from './social-providers';
 
@@ -107,7 +106,7 @@ export function SignUp({
           router.push(callbackUrl);
         },
         onError: (e: any) => {
-          toast.error(formatAuthErrorMessage(e, 'sign up failed'));
+          toast.error(e?.error?.message || 'sign up failed');
           setLoading(false);
         },
       }
