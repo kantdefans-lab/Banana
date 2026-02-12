@@ -53,7 +53,7 @@ async function logDbDiagnostics() {
         return { ping, regSession, searchPath };
       })(),
       new Promise((_, reject) =>
-        setTimeout(() => reject(new Error('db diagnostics timeout')), 2500)
+        setTimeout(() => reject(new Error('db diagnostics timeout')), 9000)
       ),
     ]);
 

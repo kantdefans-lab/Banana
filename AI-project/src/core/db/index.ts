@@ -24,6 +24,16 @@ function shouldUseSsl(databaseUrl: string) {
   }
 }
 
+function getSslConfig(databaseUrl: string) {
+  if (!shouldUseSsl(databaseUrl)) {
+    return undefined;
+  }
+
+  // Supabase/managed Postgres often requires SSL; in edge runtimes,
+  // rejecting unauthorized can fail due to missing CA chain.
+  return { rejectUnauthorized: false } as const;
+}
+
 export function db() {
   let databaseUrl = envConfigs.database_url;
 
@@ -66,10 +76,11 @@ export function db() {
     const workerClient = postgres(databaseUrl, {
       prepare: false,
       max: maxConnections,
-      idle_timeout: 10,
-      max_lifetime: 60,
-      connect_timeout: 8,
-      ssl: shouldUseSsl(databaseUrl) ? 'require' : undefined,
+      idle_timeout: 5,
+      max_lifetime: 30,
+      // Fail fast in Workers to avoid hung fetch events.
+      connect_timeout: 5,
+      ssl: getSslConfig(databaseUrl),
     });
 
     return drizzle({ client: workerClient });
@@ -88,7 +99,7 @@ export function db() {
       max: Number(envConfigs.db_max_connections) || 1, // Maximum connections in pool (default 1)
       idle_timeout: 30, // Idle connection timeout (seconds)
       connect_timeout: 10, // Connection timeout (seconds)
-      ssl: shouldUseSsl(databaseUrl) ? 'require' : undefined,
+      ssl: getSslConfig(databaseUrl),
     });
 
     dbInstance = drizzle({ client });
@@ -102,7 +113,7 @@ export function db() {
     max: 1, // Use single connection in serverless
     idle_timeout: 20,
     connect_timeout: 10,
-    ssl: shouldUseSsl(databaseUrl) ? 'require' : undefined,
+    ssl: getSslConfig(databaseUrl),
   });
 
   return drizzle({ client: serverlessClient });
