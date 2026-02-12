@@ -30,6 +30,7 @@ const authOptions = {
   rateLimit: {
     window: 10,
     max: 100,
+    storage: 'memory',
     customRules: {
       '/sign-in/*': { window: 60, max: 20 },
       '/sign-up/*': { window: 60, max: 10 },
