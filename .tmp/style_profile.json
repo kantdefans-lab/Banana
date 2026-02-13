@@ -1,0 +1,280 @@
+{
+  "profile_version": "1.1.1",
+  "generated_at_utc": "2026-02-12T08:08:38.582939+00:00",
+  "corpus_path": "C:\\Users\\86136\\Desktop\\文风改写库\\陈冠初日常",
+  "recursive": true,
+  "cache_hit": false,
+  "cache_key": "a09fe73d8c03965a1f019e5299de7e8fb202810d5a6d25a53b2f1b2f732ffb03",
+  "cache_path": "C:\\Users\\86136\\AppData\\Local\\codex\\skill-cache\\pdf-style-polisher\\a09fe73d8c03965a1f019e5299de7e8fb202810d5a6d25a53b2f1b2f732ffb03.json",
+  "document_count": 1,
+  "processed_document_count": 1,
+  "source_file_counts": {
+    "pdf": 0,
+    "docx": 0,
+    "doc": 0,
+    "txt": 1
+  },
+  "processed_file_counts": {
+    "pdf": 0,
+    "docx": 0,
+    "doc": 0,
+    "txt": 1
+  },
+  "total_pages": 0,
+  "failed_files": [],
+  "suspected_low_text_files": [],
+  "source_files": [
+    "新建 文本文档.txt"
+  ],
+  "pdf_count": 0,
+  "processed_pdf_count": 0,
+  "pdf_files": [],
+  "language_mix": {
+    "dominant_language": "zh",
+    "zh_share": 0.997,
+    "en_share": 0.003,
+    "zh_characters": 2872,
+    "en_characters": 10
+  },
+  "tone_markers": {
+    "transition": [],
+    "assertive": [],
+    "hedging": [
+      {
+        "marker": "可能",
+        "count": 3
+      },
+      {
+        "marker": "或许",
+        "count": 1
+      }
+    ]
+  },
+  "sentence_length_stats": {
+    "count": 32.0,
+    "avg_tokens": 89.906,
+    "median_tokens": 65.0,
+    "p90_tokens": 197.0,
+    "std_tokens": 105.143,
+    "long_sentence_ratio": 0.688
+  },
+  "structure_patterns": {
+    "avg_paragraphs_per_doc": 12.0,
+    "avg_sentences_per_paragraph": 2.667,
+    "short_paragraph_ratio": 0.333,
+    "heading_line_ratio": 0.025
+  },
+  "lexical_preferences": {
+    "top_terms": [
+      {
+        "term": "我爱着",
+        "count": 3
+      },
+      {
+        "term": "我真的很难过",
+        "count": 2
+      },
+      {
+        "term": "ono",
+        "count": 2
+      },
+      {
+        "term": "逛啊逛",
+        "count": 2
+      },
+      {
+        "term": "写给我可爱的小咪",
+        "count": 1
+      },
+      {
+        "term": "寒潮过后",
+        "count": 1
+      },
+      {
+        "term": "我们来看苏州的第一场雪",
+        "count": 1
+      },
+      {
+        "term": "然现在没雪",
+        "count": 1
+      },
+      {
+        "term": "但冷是真的冷",
+        "count": 1
+      },
+      {
+        "term": "我的手痛得不行",
+        "count": 1
+      },
+      {
+        "term": "首先",
+        "count": 1
+      },
+      {
+        "term": "我要再再再再次郑重其事的说一句",
+        "count": 1
+      },
+      {
+        "term": "我爱你",
+        "count": 1
+      },
+      {
+        "term": "不知不觉",
+        "count": 1
+      },
+      {
+        "term": "跌跌撞撞的我们也是走过一个年头了",
+        "count": 1
+      },
+      {
+        "term": "哎呀",
+        "count": 1
+      },
+      {
+        "term": "时间过太快了",
+        "count": 1
+      },
+      {
+        "term": "和老婆在一起的日子真的好开心",
+        "count": 1
+      },
+      {
+        "term": "好幸福",
+        "count": 1
+      },
+      {
+        "term": "我很爱我的小咪",
+        "count": 1
+      },
+      {
+        "term": "柚子我也爱你",
+        "count": 1
+      },
+      {
+        "term": "你别伤心",
+        "count": 1
+      },
+      {
+        "term": "我是甜蜜的",
+        "count": 1
+      },
+      {
+        "term": "兴奋的",
+        "count": 1
+      },
+      {
+        "term": "幸福的",
+        "count": 1
+      },
+      {
+        "term": "小斗就写了那么点就哭出来了",
+        "count": 1
+      },
+      {
+        "term": "受不了",
+        "count": 1
+      },
+      {
+        "term": "赶紧擦掉",
+        "count": 1
+      },
+      {
+        "term": "话说今天的风真的好冷",
+        "count": 1
+      },
+      {
+        "term": "这两天是我真的很开心",
+        "count": 1
+      }
+    ],
+    "top_bigrams": [
+      {
+        "bigram": "写给我可爱的小咪 寒潮过后",
+        "count": 1
+      },
+      {
+        "bigram": "寒潮过后 我们来看苏州的第一场雪",
+        "count": 1
+      },
+      {
+        "bigram": "我们来看苏州的第一场雪 然现在没雪",
+        "count": 1
+      },
+      {
+        "bigram": "然现在没雪 但冷是真的冷",
+        "count": 1
+      },
+      {
+        "bigram": "但冷是真的冷 我的手痛得不行",
+        "count": 1
+      },
+      {
+        "bigram": "我的手痛得不行 首先",
+        "count": 1
+      },
+      {
+        "bigram": "首先 我要再再再再次郑重其事的说一句",
+        "count": 1
+      },
+      {
+        "bigram": "我要再再再再次郑重其事的说一句 我爱你",
+        "count": 1
+      },
+      {
+        "bigram": "我爱你 不知不觉",
+        "count": 1
+      },
+      {
+        "bigram": "不知不觉 跌跌撞撞的我们也是走过一个年头了",
+        "count": 1
+      },
+      {
+        "bigram": "跌跌撞撞的我们也是走过一个年头了 哎呀",
+        "count": 1
+      },
+      {
+        "bigram": "哎呀 时间过太快了",
+        "count": 1
+      },
+      {
+        "bigram": "时间过太快了 和老婆在一起的日子真的好开心",
+        "count": 1
+      },
+      {
+        "bigram": "和老婆在一起的日子真的好开心 好幸福",
+        "count": 1
+      },
+      {
+        "bigram": "好幸福 我很爱我的小咪",
+        "count": 1
+      }
+    ],
+    "vocabulary_size": 331
+  },
+  "rhetorical_moves": {
+    "problem_solution": 0,
+    "comparison": 5,
+    "stepwise": 1,
+    "evidence": 0,
+    "call_to_action": 0
+  },
+  "banned_patterns": [
+    "Do not introduce facts that are not supported by source_text.",
+    "Do not copy long verbatim corpus sentences; mimic style instead of copying.",
+    "Do not change named entities, numbers, or key terms without explicit request.",
+    "Avoid chaining too many clauses in one sentence."
+  ],
+  "evidence_samples": [
+    "首先，我要再再再再次郑重其事的说一句",
+    "小斗睡醒了，小斗要上厕所。",
+    "臭咪我又想哭了，哦对马上可以见到柚子了，快到了，小斗不写了。",
+    "##小春，你好哇！突然想给你写一封情书，不知道小春以前有没有收到过。这是老公给你的第一封信咯。",
+    "好爱你，真的。想到一段话 我爱着，什么都不说。我爱着，只有心里知觉。",
+    "我珍惜我的秘密，也珍惜我的痛苦。",
+    "我曾经发誓，我爱着，不抱有希望。但并不是没有幸福。",
+    "只要能够看着你，就很满足。",
+    "下午。和老婆去年轮咖啡喵喵。"
+  ],
+  "style_consistency_score": 0.559,
+  "warnings": []
+}

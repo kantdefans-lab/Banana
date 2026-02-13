@@ -1,0 +1,87 @@
+{
+  "profile_version": "1.1.0",
+  "generated_at_utc": "2026-02-12T07:19:38.507263+00:00",
+  "corpus_path": "C:\\Users\\86136\\Desktop\\新建文件夹 (2)",
+  "recursive": true,
+  "cache_hit": true,
+  "cache_key": "23e6a931401e3f9b6388241e2c33f3f81bcba6c480522ef8703fa8abf7436a5a",
+  "cache_path": "C:\\Users\\86136\\AppData\\Local\\codex\\skill-cache\\pdf-style-polisher\\23e6a931401e3f9b6388241e2c33f3f81bcba6c480522ef8703fa8abf7436a5a.json",
+  "document_count": 1,
+  "processed_document_count": 0,
+  "source_file_counts": {
+    "pdf": 0,
+    "docx": 0,
+    "doc": 1
+  },
+  "processed_file_counts": {
+    "pdf": 0,
+    "docx": 0,
+    "doc": 0
+  },
+  "total_pages": 0,
+  "failed_files": [
+    {
+      "file": "他心问题.doc",
+      "error": "Cannot open .doc via Word COM (RuntimeError: win32com.client is still unavailable after installation.). Install Microsoft Word or convert .doc to .docx."
+    }
+  ],
+  "suspected_low_text_files": [],
+  "source_files": [
+    "他心问题.doc"
+  ],
+  "pdf_count": 0,
+  "processed_pdf_count": 0,
+  "pdf_files": [],
+  "language_mix": {
+    "dominant_language": "mixed",
+    "zh_share": 0.0,
+    "en_share": 0.0,
+    "zh_characters": 0,
+    "en_characters": 0
+  },
+  "tone_markers": {
+    "transition": [],
+    "assertive": [],
+    "hedging": []
+  },
+  "sentence_length_stats": {
+    "count": 0.0,
+    "avg_tokens": 0.0,
+    "median_tokens": 0.0,
+    "p90_tokens": 0.0,
+    "std_tokens": 0.0,
+    "long_sentence_ratio": 0.0
+  },
+  "structure_patterns": {
+    "avg_paragraphs_per_doc": 0.0,
+    "avg_sentences_per_paragraph": 0.0,
+    "short_paragraph_ratio": 0.0,
+    "heading_line_ratio": 0.0
+  },
+  "lexical_preferences": {
+    "top_terms": [],
+    "top_bigrams": [],
+    "vocabulary_size": 0
+  },
+  "rhetorical_moves": {
+    "problem_solution": 0,
+    "comparison": 0,
+    "stepwise": 0,
+    "evidence": 0,
+    "call_to_action": 0
+  },
+  "banned_patterns": [
+    "Do not introduce facts that are not supported by source_text.",
+    "Do not copy long verbatim corpus sentences; mimic style instead of copying.",
+    "Do not change named entities, numbers, or key terms without explicit request.",
+    "Avoid unstable language switching unless source_text is mixed.",
+    "Avoid aggressive style imitation; keep adaptation conservative."
+  ],
+  "evidence_samples": [],
+  "style_consistency_score": 0.0,
+  "warnings": [
+    "Failed to extract 1 file(s); profile uses remaining files.",
+    "Low style consistency detected; prefer medium-high or light fidelity."
+  ],
+  "cache_loaded_at_utc": "2026-02-12T07:22:20.553243+00:00"
+}

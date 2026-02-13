@@ -1,0 +1,327 @@
+{
+  "profile_version": "1.1.1",
+  "generated_at_utc": "2026-02-12T07:23:13.111455+00:00",
+  "corpus_path": "C:\\Users\\86136\\Desktop\\新建文件夹 (2)",
+  "recursive": true,
+  "cache_hit": false,
+  "cache_key": "23e6a931401e3f9b6388241e2c33f3f81bcba6c480522ef8703fa8abf7436a5a",
+  "cache_path": "C:\\Users\\86136\\AppData\\Local\\codex\\skill-cache\\pdf-style-polisher\\23e6a931401e3f9b6388241e2c33f3f81bcba6c480522ef8703fa8abf7436a5a.json",
+  "document_count": 1,
+  "processed_document_count": 1,
+  "source_file_counts": {
+    "pdf": 0,
+    "docx": 0,
+    "doc": 1
+  },
+  "processed_file_counts": {
+    "pdf": 0,
+    "docx": 0,
+    "doc": 1
+  },
+  "total_pages": 0,
+  "failed_files": [],
+  "suspected_low_text_files": [],
+  "source_files": [
+    "他心问题.doc"
+  ],
+  "pdf_count": 0,
+  "processed_pdf_count": 0,
+  "pdf_files": [],
+  "language_mix": {
+    "dominant_language": "mixed",
+    "zh_share": 0.565,
+    "en_share": 0.435,
+    "zh_characters": 88440,
+    "en_characters": 68011
+  },
+  "tone_markers": {
+    "transition": [
+      {
+        "marker": "因此",
+        "count": 97
+      },
+      {
+        "marker": "同时",
+        "count": 66
+      },
+      {
+        "marker": "然而",
+        "count": 49
+      },
+      {
+        "marker": "另一方面",
+        "count": 10
+      },
+      {
+        "marker": "另外",
+        "count": 2
+      }
+    ],
+    "assertive": [
+      {
+        "marker": "必须",
+        "count": 39
+      },
+      {
+        "marker": "显然",
+        "count": 13
+      },
+      {
+        "marker": "确实",
+        "count": 12
+      },
+      {
+        "marker": "应当",
+        "count": 4
+      }
+    ],
+    "hedging": [
+      {
+        "marker": "可能",
+        "count": 180
+      },
+      {
+        "marker": "倾向于",
+        "count": 14
+      },
+      {
+        "marker": "或许",
+        "count": 7
+      },
+      {
+        "marker": "may",
+        "count": 1
+      }
+    ]
+  },
+  "sentence_length_stats": {
+    "count": 3385.0,
+    "avg_tokens": 30.866,
+    "median_tokens": 4.0,
+    "p90_tokens": 93.0,
+    "std_tokens": 85.075,
+    "long_sentence_ratio": 0.125
+  },
+  "structure_patterns": {
+    "avg_paragraphs_per_doc": 39.0,
+    "avg_sentences_per_paragraph": 86.795,
+    "short_paragraph_ratio": 0.231,
+    "heading_line_ratio": 0.017
+  },
+  "lexical_preferences": {
+    "top_terms": [
+      {
+        "term": "social",
+        "count": 103
+      },
+      {
+        "term": "asd",
+        "count": 75
+      },
+      {
+        "term": "因此",
+        "count": 75
+      },
+      {
+        "term": "psychology",
+        "count": 75
+      },
+      {
+        "term": "husserl",
+        "count": 74
+      },
+      {
+        "term": "neuroscience",
+        "count": 65
+      },
+      {
+        "term": "journal",
+        "count": 62
+      },
+      {
+        "term": "stein",
+        "count": 60
+      },
+      {
+        "term": "例如",
+        "count": 57
+      },
+      {
+        "term": "cognitive",
+        "count": 49
+      },
+      {
+        "term": "然而",
+        "count": 48
+      },
+      {
+        "term": "gallese",
+        "count": 48
+      },
+      {
+        "term": "autism",
+        "count": 45
+      },
+      {
+        "term": "cortex",
+        "count": 45
+      },
+      {
+        "term": "brain",
+        "count": 45
+      },
+      {
+        "term": "simulation",
+        "count": 44
+      },
+      {
+        "term": "self",
+        "count": 44
+      },
+      {
+        "term": "human",
+        "count": 43
+      },
+      {
+        "term": "cognition",
+        "count": 42
+      },
+      {
+        "term": "interoceptive",
+        "count": 42
+      },
+      {
+        "term": "perception",
+        "count": 41
+      },
+      {
+        "term": "theory",
+        "count": 39
+      },
+      {
+        "term": "neural",
+        "count": 39
+      },
+      {
+        "term": "sciences",
+        "count": 39
+      },
+      {
+        "term": "press",
+        "count": 39
+      },
+      {
+        "term": "action",
+        "count": 37
+      },
+      {
+        "term": "oxford",
+        "count": 37
+      },
+      {
+        "term": "science",
+        "count": 35
+      },
+      {
+        "term": "csibra",
+        "count": 35
+      },
+      {
+        "term": "facial",
+        "count": 35
+      }
+    ],
+    "top_bigrams": [
+      {
+        "bigram": "university press",
+        "count": 26
+      },
+      {
+        "bigram": "social cognition",
+        "count": 24
+      },
+      {
+        "bigram": "other minds",
+        "count": 20
+      },
+      {
+        "bigram": "theory mind",
+        "count": 18
+      },
+      {
+        "bigram": "trends cognitive",
+        "count": 17
+      },
+      {
+        "bigram": "autism spectrum",
+        "count": 17
+      },
+      {
+        "bigram": "oxford university",
+        "count": 16
+      },
+      {
+        "bigram": "cognitive sciences",
+        "count": 16
+      },
+      {
+        "bigram": "husserl stein",
+        "count": 15
+      },
+      {
+        "bigram": "interoceptive awareness",
+        "count": 14
+      },
+      {
+        "bigram": "embodied simulation",
+        "count": 13
+      },
+      {
+        "bigram": "new york",
+        "count": 13
+      },
+      {
+        "bigram": "csibra gergely",
+        "count": 13
+      },
+      {
+        "bigram": "social psychology",
+        "count": 13
+      },
+      {
+        "bigram": "frontiers psychology",
+        "count": 13
+      }
+    ],
+    "vocabulary_size": 9088
+  },
+  "rhetorical_moves": {
+    "problem_solution": 145,
+    "comparison": 140,
+    "stepwise": 76,
+    "evidence": 411,
+    "call_to_action": 23
+  },
+  "banned_patterns": [
+    "Do not introduce facts that are not supported by source_text.",
+    "Do not copy long verbatim corpus sentences; mimic style instead of copying.",
+    "Do not change named entities, numbers, or key terms without explicit request.",
+    "Avoid unstable language switching unless source_text is mixed."
+  ],
+  "evidence_samples": [
+    "第三编 他心问题 第三编将涉及如下主题： 1.",
+    "他心问题的现象学进路；",
+    "他心问题的直接社会感知进路；",
+    "他心问题的具身模拟进路；",
+    "他心问题的内感受进路；",
+    "他心问题的预测加工进路。",
+    "78 用最美妙的外表把人们的耳目欺骗，奸诈的心必须罩上虚伪的笑脸。",
+    "面容是悲伤的外表。它们一起形成了一个天然的统一体。",
+    "——Stein，《关于同感的问题》，2008, pp.",
+    "3 他心并现何以可能？",
+    "虽然Stein对此也曾表达：“在每一次经验中，欺骗在这里也是可能的”(2008, p.",
+    "87)，并且“是由自然和意义而关联起来，而不是以因果性关联起来”( 2008, p."
+  ],
+  "style_consistency_score": 0.498,
+  "warnings": []
+}

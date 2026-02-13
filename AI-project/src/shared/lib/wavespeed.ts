@@ -449,6 +449,8 @@ export async function buildParams({
     params.image_urls = imageUrls;
     params.image_url = imageUrls[0];
     params.image = imageUrls[0];
+    params.reference_images = imageUrls;
+    params.reference_image = imageUrls[0];
   }
 
   // Schema-driven adjustments
@@ -493,6 +495,8 @@ export async function buildParams({
     if (!allowedKeys.has('image_urls')) delete params.image_urls;
     if (!allowedKeys.has('image_url')) delete params.image_url;
     if (!allowedKeys.has('image')) delete params.image;
+    if (!allowedKeys.has('reference_images')) delete params.reference_images;
+    if (!allowedKeys.has('reference_image')) delete params.reference_image;
     if (!allowedKeys.has('camera_fixed')) delete params.camera_fixed;
     if (!allowedKeys.has('remove_watermark')) delete params.remove_watermark;
   }
