@@ -16,7 +16,10 @@ import { OverviewCharts } from './overview-charts';
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
-function formatDate(locale: string, date: Date) {
+function formatDate(locale: string, input: Date | string | number | null | undefined) {
+  if (!input) return '-';
+  const date = input instanceof Date ? input : new Date(input);
+  if (!Number.isFinite(date.getTime())) return '-';
   return new Intl.DateTimeFormat(locale, {
     month: 'short',
     day: '2-digit',
